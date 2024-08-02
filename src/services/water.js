@@ -1,5 +1,16 @@
 import { WaterCollection } from '../db/models/water.js';
 
+
+export const getWaterCards = async(userId, filter, sortBy) =>{
+const waterCards = WaterCollection.find({});
+return waterCards;
+};
+
+// export const getAllCardsForMonth = async() =>{
+
+// }
+
+
 export const createCard = async (payload) => {
   const card = await WaterCollection.create(payload);
   return card;
