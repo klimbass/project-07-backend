@@ -1,6 +1,12 @@
 import { createCard, patchCard, deleteCard } from '../services/water.js';
 import createHttpError from 'http-errors';
 
+export const getWaterCardsController = async (req, res) => {
+  const cardData = {
+    ...req.body,
+    userId: req.user._id,
+  }};
+
 export const createCardController = async (req, res) => {
   const cardData = {
     ...req.body,
