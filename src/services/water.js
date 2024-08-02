@@ -1,7 +1,8 @@
 import { WaterCollection } from '../db/models/water.js';
 
 export const createCard = async (payload) => {
-  return await WaterCollection.create(payload);
+  const card = await WaterCollection.create(payload);
+  return card;
 };
 
 export const patchCard = async (cardId, payload = {}, userId) => {
@@ -15,15 +16,19 @@ export const patchCard = async (cardId, payload = {}, userId) => {
 
   if (!rawResult || !rawResult.value) return null;
 
-  return {
+  const patchedCard = {
     card: rawResult.value,
     isNew: Boolean(rawResult?.lastErrorObject?.upsert),
   };
+
+  return patchedCard;
 };
 
 export const deleteCard = async (cardId, userId) => {
-  return await WaterCollection.findOneAndDelete({
+  const result = await WaterCollection.findOneAndDelete({
     _id: cardId,
     userId,
   });
+
+  return result;
 };
