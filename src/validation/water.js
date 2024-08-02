@@ -7,7 +7,7 @@ export const createCardSchema = Joi.object({
     'number.max': 'Amount should be at most 5000 ml',
     'any.required': 'Amount is required',
   }),
-  date: Joi.string().required().messages({
+  date: Joi.date().iso().required().messages({
     'any.required': 'Date is required',
   }),
 });
@@ -18,7 +18,7 @@ export const updateCardSchema = Joi.object({
     'number.min': 'Amount should be at least 1 ml',
     'number.max': 'Amount should be at most 5000 ml',
   }),
-  date: Joi.string(),
+  date: Joi.date().iso(),
 })
   .min(1)
   .messages({
