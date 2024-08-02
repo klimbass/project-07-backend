@@ -1,13 +1,12 @@
 import { Router } from 'express';
 
-//TODO: @akoroliova
-// import { authenticate } from '../middlewares/authenticate.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
+import { isValidId } from '../middlewares/isValidId.js';
 //TODO: @akoroliova
 import { createCardSchema } from '../validation/water.js'; // цей файл і Joi-схему чекаю від Наталії
-import { isValidId } from '../middlewares/isValidId.js';
 
 import {
   createCardController,
@@ -17,16 +16,16 @@ import {
 
 const waterRouter = Router();
 
-// waterRouter.use(authenticate) //аутентіфікація на всі роути
+waterRouter.use(authenticate);
 
-// створити приватний ендпоінт додавання запису про спожитий обʼєм води
+// приватний ендпоінт додавання запису про спожитий обʼєм води
 waterRouter.post(
   '/',
   validateBody(createCardSchema),
   ctrlWrapper(createCardController),
 );
 
-// створити приватний ендпоінт редагування запису про спожитий обʼєм води
+// приватний ендпоінт редагування запису про спожитий обʼєм води
 waterRouter.patch(
   '/:cardId',
   isValidId,
@@ -34,7 +33,7 @@ waterRouter.patch(
   ctrlWrapper(patchCardController),
 );
 
-// створити приватний ендпоінт видалення запису про спожитий обʼєм води
+// приватний ендпоінт видалення запису про спожитий обʼєм води
 waterRouter.delete('/:cardId', isValidId, ctrlWrapper(deleteCardController));
 
 // створити приватний ендпоінт для отримання даних щодо спожитої користувачем води за день
