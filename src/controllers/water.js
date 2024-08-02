@@ -18,12 +18,17 @@ export const createCardController = async (req, res) => {
 
 export const patchCardController = async (req, res) => {
   const { cardId } = req.params;
+  const payload = req.body;
   const userId = req.user._id;
 
-  const patchedCard = await patchCard(cardId, { ...req.body }, userId);
+  const patchedCard = await patchCard(cardId, payload, userId);
 
   if (!patchedCard) {
-    throw createHttpError(404, 'Card not found');
+    throw createHttpError(404, 'Card not found', {
+      data: {
+        message: `Card with ${cardId} not found`,
+      },
+    });
   }
 
   res.status(200).json({
@@ -37,12 +42,12 @@ export const deleteCardController = async (req, res) => {
   const { cardId } = req.params;
   const userId = req.user._id;
 
-  const deletedCard = await deleteCard(cardId, userId);
+  const result = await deleteCard(cardId, userId);
 
-  if (!deletedCard) {
+  if (!result) {
     throw createHttpError(404, 'Card not found', {
       data: {
-        message: 'Card not found',
+        message: `Card with ${cardId} not found`,
       },
     });
   }
