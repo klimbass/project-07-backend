@@ -2,11 +2,11 @@ import { Router } from 'express';
 
 import { authenticate } from '../middlewares/authenticate.js';
 
-import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js'; //TODO: для @akoroliova - цей файл чекаю від ?
 import { validateBody } from '../middlewares/validateBody.js';
 import { isValidId } from '../middlewares/isValidId.js';
-//TODO: @akoroliova
-import { createCardSchema } from '../validation/water.js'; // цей файл і Joi-схему чекаю від Наталії
+
+import { createCardSchema } from '../validation/water.js'; //TODO: для @akoroliova - цей файл і Joi-схему чекаю від Наталії
 
 import {
   createCardController,
