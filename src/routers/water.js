@@ -1,5 +1,11 @@
 import { Router } from 'express';
 
+//TODO: @akoroliova
+// import { authenticate } from '../middlewares/authenticate.js';
+// import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+// import { validateBody } from '../middlewares/validateBody.js';
+// import { isValidId } from '../middlewares/isValidId.js';
+
 const waterRouter = Router();
 
 // waterRouter.use(authenticate) //аутентіфікація на всі роути
