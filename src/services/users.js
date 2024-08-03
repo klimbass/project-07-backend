@@ -8,9 +8,6 @@ import { SessionsCollection } from '../db/models/session.js';
 import { getFullNameFromGoogleTokenPayload, validateCode } from '../utils/googleOAuth2.js';
 
 
-
-
-
 export const getTotalUsers = async () => {
     return await UsersCollection.countDocuments();
 };
@@ -136,6 +133,25 @@ export const loginOrSignupWithGoogle = async (code) => {
     userId: user._id,
     ...newSession,
   });
+};
+
+export const updateCurrentUser = async (userId, data, options = {}) => {
+  const result = await UsersCollection.findOneAndUpdate(
+    { _id: userId},
+    data,
+    {
+      new: true,
+      includeResultMetadata: true,
+      ...options,
+  },
+  );
+
+  if (!result || !result.value) return null;
+
+  return {
+    contact: result.value,
+    isNew: Boolean(result?.lastErrorObject?.upserted),
+  };
 };
 
 

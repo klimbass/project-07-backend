@@ -7,6 +7,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
+import { UPLOAD_DIR } from './constants/index.js';
 
 const PORT = Number(env('PORT', 3000));
 
@@ -33,6 +34,8 @@ export const setupServer = () => {
     res.send('Welcome to the homepage');
   });
   app.use(router);
+
+  app.use('/upload',express.static(UPLOAD_DIR));
 
   app.use('*', notFoundHandler);
 
