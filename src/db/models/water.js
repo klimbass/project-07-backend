@@ -7,21 +7,21 @@ const getCurrentDate = () => {
 };
 
 const waterSchema = new Schema(
-{
+  {
     volume: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true
     },
     date: {
-        type: String,
-        required: true,
-        default: getCurrentDate
+      type: String,
+      required: true,
+      default: getCurrentDate
     },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'users'
     }
-},
+  },
 
   { timestamps: true, versionKey: false },
 );

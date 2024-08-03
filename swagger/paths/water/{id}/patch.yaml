@@ -1,0 +1,59 @@
+tags:
+  - Water
+summary: Patch water card by id
+operationId: patchCard
+description: 'Update info on existing water card with given id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '66ad21159acfa4bd9e5cfd1f'
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        oneOf:
+          - required:
+              - volume
+            properties:
+              volume:
+                description: 'Amount of water consumed in ml'
+                type: number
+                example: 200
+          - required:
+              - date
+            properties:
+              date:
+                description: 'Time of consumption'
+                type: string
+                example: '2024-08-02T21:00'
+responses:
+  '200':
+    description: Successfully patched a card!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully patched a card!
+            data:
+              type: object
+              $ref: '../../../components/schemas/water.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
