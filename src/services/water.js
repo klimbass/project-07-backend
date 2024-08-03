@@ -1,14 +1,18 @@
 import { WaterCollection } from '../db/models/water.js';
 
 
-export const getWaterCards = async(userId, filter, sortBy) =>{
-const waterCards = WaterCollection.find({});
-return waterCards;
-};
+export const getWaterCards = async(userId, day, sortBy) =>{
+
+
+const items = await WaterCollection.find({userId:userId, date: { $regex: day }});
+const totalItems = await WaterCollection.countDocuments({userId:userId, date: { $regex: day }});
+const waterAmount = await WaterCollection.aggregate( [{ $match: { date: { $regex: day }}}, {$group: { _id: day, amount: { $sum: "$volume" } }}]);
+return {items, totalItems, waterAmount};
+
 
 // export const getAllCardsForMonth = async() =>{
 
-// }
+};
 
 
 export const createCard = async (payload) => {
