@@ -7,6 +7,7 @@ import {
   loginWithGoogleOAuthSchema,
   requestResetEmailSchema,
   resetPasswordSchema,
+  updateUserSchema
 } from '../validation/users.js';
 import {
   getTotalUsersController,
@@ -17,8 +18,10 @@ import {
   refreshUserSessionController,
   loginWithGoogleController,
   requestResetEmailController,
-  resetPasswordController,
+  resetPasswordController,getCurrentUserController, updateCurrentUserController
 } from '../controllers/users.js';
+import {authenticate} from '../middlewares/authenticate.js';
+import {upload} from '../middlewares/multer.js';
 
 const usersRouter = Router();
 usersRouter.get('/total', ctrlWrapper(getTotalUsersController)); //отримання загальної кількості зареєстрованих у застосунку користувачів
@@ -38,17 +41,17 @@ usersRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 usersRouter.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
 //Створення логіну ueuk
 usersRouter.post(
-  '/confirm-oauth',
-  validateBody(loginWithGoogleOAuthSchema),
-  ctrlWrapper(loginWithGoogleController),
+ '/confirm-oauth',
+   validateBody(loginWithGoogleOAuthSchema),
+   ctrlWrapper(loginWithGoogleController),
 );
-
-usersRouter.post(
+//Створення роутів на отримання та оновлення даних поточного користувача
+usersRouter.get( '/current', authenticate, ctrlWrapper(getCurrentUserController));
+usersRouter.patch( '/update', authenticate, upload.single('avatar'), validateBody(updateUserSchema),ctrlWrapper(updateCurrentUserController));usersRouter.post(
   '/request-reset-email',
   validateBody(requestResetEmailSchema),
   ctrlWrapper(requestResetEmailController),
 );
-
 usersRouter.post(
   '/reset-password',
   validateBody(resetPasswordSchema),
