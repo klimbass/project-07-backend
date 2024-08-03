@@ -1,5 +1,4 @@
 import path from 'node:path';
-
 export const MONGO_DB = {
   MONGODB_USER: 'MONGODB_USER',
   MONGODB_PASSWORD: 'MONGODB_PASSWORD',
