@@ -1,3 +1,5 @@
+import path from 'node:path';
+
 export const MONGO_DB = {
   MONGODB_USER: 'MONGODB_USER',
   MONGODB_PASSWORD: 'MONGODB_PASSWORD',
@@ -15,3 +17,5 @@ export const SMTP = {
   SMTP_PASSWORD: 'SMTP_PASSWORD',
   SMTP_FROM: 'SMTP_FROM',
 };
+
+export const TEMPLATES_DIR = path.resolve('src', 'templates');

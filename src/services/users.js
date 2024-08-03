@@ -3,7 +3,7 @@ import { randomBytes } from 'crypto';
 import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/user.js';
 
-import { FORTY_MINUTES, SEVEN_DAY } from '../constants/index.js';
+import { FORTY_MINUTES, SEVEN_DAY, TEMPLATES_DIR } from '../constants/index.js';
 import { SessionsCollection } from '../db/models/session.js';
 import {
   getFullNameFromGoogleTokenPayload,
@@ -13,6 +13,9 @@ import { sendEmail } from '../utils/sendMail.js';
 import jwt from 'jsonwebtoken';
 import { env } from '../utils/env.js';
 import { SMTP } from '../constants/index.js';
+import handlebars from 'handlebars';
+import path from 'node:path';
+import fs from 'node:fs/promises';
 
 export const getTotalUsers = async () => {
   return await UsersCollection.countDocuments();
@@ -154,14 +157,26 @@ export const requestResetToken = async (email) => {
       expiresIn: '15m',
     },
   );
-  console.log(resetToken);
+
+  const resetPasswordTemplatePath = path.join(
+    TEMPLATES_DIR,
+    'reset-password-email.html',
+  );
+
+  const name = user.name !== 'User' ? user.name : user.email.split('@')[0];
+  const templateSource = await fs.readFile(resetPasswordTemplatePath, 'utf-8');
+  const template = handlebars.compile(templateSource);
+  const html = template({
+    name: name,
+    reset_link: `${env('LINK_RESET_PASSWORD')}?token=${resetToken}`,
+    email_support: `${env('EMAIL_SUPPORT')}`,
+  });
+
   await sendEmail({
     from: env(SMTP.SMTP_FROM),
     to: email,
     subject: 'Reset your password',
-    html: `<p>Click <a href="${env(
-      'LINK_RESET_PASSWORD',
-    )}?token=${resetToken}">here</a> to reset your password!</p>`,
+    html,
   });
 };
 
