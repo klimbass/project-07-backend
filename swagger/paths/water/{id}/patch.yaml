@@ -14,7 +14,7 @@ parameters:
       example: '66ad21159acfa4bd9e5cfd1f'
 requestBody:
   content:
-    multipart/form-data:
+    application/json:
       schema:
         type: object
         oneOf:
@@ -34,7 +34,7 @@ requestBody:
                 example: '2024-08-02T21:00'
 responses:
   '200':
-    description: Updates a card
+    description: Successfully patched a card!
     content:
       application/json:
         schema:

@@ -9,9 +9,11 @@ info:
 tags:
   - name: Water
     description: Operations related to managing water consumption.
+  - name: Auth
+    description: Auth operations.
 servers:
   # update server url when we go live
-  - url: https://www.edu.goit.global
+  - url: http://localhost:3000
     description: Production server
 paths:
   /water:

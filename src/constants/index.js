@@ -20,4 +20,8 @@ export const SMTP = {
 
 export const TEMPLATES_DIR = path.resolve('src', 'templates');
 
-export const dateStringPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
+export const dateStringPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');
+
+export const UPLOAD_DIR = path.join(process.cwd(), 'uploads');

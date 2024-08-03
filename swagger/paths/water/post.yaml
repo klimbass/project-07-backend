@@ -7,27 +7,24 @@ security:
   - bearerAuth: []
 requestBody:
   content:
-    multipart/form-data:
+    application/json:
       schema:
         type: object
-        oneOf:
-          - required:
-              - volume
-            properties:
-              volume:
-                description: 'Amount of water consumed in ml'
-                type: number
-                example: 200
-          - required:
-              - date
-            properties:
-              date:
-                description: 'Time of consumption'
-                type: string
-                example: '2024-08-02T21:00'
+        required:
+          - volume
+          - date
+        properties:
+          volume:
+            description: 'Amount of water consumed in ml'
+            type: number
+            example: 200
+          date:
+            description: 'Time of consumption'
+            type: string
+            example: '2024-08-02T21:00'
 responses:
   '201':
-    description: Creates a card
+    description: Successfully created a card!
     content:
       application/json:
         schema:
@@ -46,7 +43,11 @@ responses:
             data:
               type: object
               $ref: '../../components/schemas/water.yaml'
+  '400':
+    $ref: '../../components/responses/400.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
   '404':
     $ref: '../../components/responses/404.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'
