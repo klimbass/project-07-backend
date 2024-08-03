@@ -1,0 +1,23 @@
+tags:
+  - Water
+summary: Delete water card by id
+operationId: deleteCard
+description: 'Delete existing water card with given id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '66ad21159acfa4bd9e5cfd1f'
+responses:
+  '204':
+    description: 'No content'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
