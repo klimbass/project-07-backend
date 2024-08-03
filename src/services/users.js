@@ -142,44 +142,6 @@ export const loginOrSignupWithGoogle = async (code) => {
   });
 };
 
-export const updateCurrentUser = async (userId, data, options = {}) => {
-  const result = await UsersCollection.findOneAndUpdate(
-    { _id: userId},
-    data,
-    {
-      new: true,
-      includeResultMetadata: true,
-      ...options,
-  },
-  );
-
-  if (!result || !result.value) return null;
-
-  return {
-    contact: result.value,
-    isNew: Boolean(result?.lastErrorObject?.upserted),
-  };
-};
-
-export const updateCurrentUser = async (userId, data, options = {}) => {
-  const result = await UsersCollection.findOneAndUpdate(
-    { _id: userId},
-    data,
-    {
-      new: true,
-      includeResultMetadata: true,
-      ...options,
-  },
-  );
-
-  if (!result || !result.value) return null;
-
-  return {
-    contact: result.value,
-    isNew: Boolean(result?.lastErrorObject?.upserted),
-  };
-};
-
 export const requestResetToken = async (email) => {
   const user = await UsersCollection.findOne({ email });
   if (!user) {
@@ -238,4 +200,23 @@ export const resetPassword = async (payload) => {
     { _id: user._id },
     { password: encryptedPassword },
   );
+};
+
+export const updateCurrentUser = async (userId, data, options = {}) => {
+  const result = await UsersCollection.findOneAndUpdate(
+    { _id: userId},
+    data,
+    {
+      new: true,
+      includeResultMetadata: true,
+      ...options,
+  },
+  );
+
+  if (!result || !result.value) return null;
+
+  return {
+    contact: result.value,
+    isNew: Boolean(result?.lastErrorObject?.upserted),
+  };
 };

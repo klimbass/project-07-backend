@@ -7,6 +7,7 @@ import {
   loginWithGoogleOAuthSchema,
   requestResetEmailSchema,
   resetPasswordSchema,
+  updateUserSchema
 } from '../validation/users.js';
 import {
   getTotalUsersController,
@@ -17,10 +18,7 @@ import {
   refreshUserSessionController,
   loginWithGoogleController,
   requestResetEmailController,
-  resetPasswordController,
-} from '../controllers/users.js';
-import { registerUserSchema, loginUserSchema, loginWithGoogleOAuthSchema, updateUserSchema } from '../validation/users.js';
-import { getTotalUsersController, registerUserController, getGoogleOAuthUrlController, loginUserController, logoutUserController, refreshUserSessionController, loginWithGoogleController, getCurrentUserController, updateCurrentUserController
+  resetPasswordController,getCurrentUserController, updateCurrentUserController
 } from '../controllers/users.js';
 import {authenticate} from '../middlewares/authenticate.js';
 import {upload} from '../middlewares/multer.js';
@@ -54,7 +52,6 @@ usersRouter.patch( '/update', authenticate, upload.single('avatar'), validateBod
   validateBody(requestResetEmailSchema),
   ctrlWrapper(requestResetEmailController),
 );
-
 usersRouter.post(
   '/reset-password',
   validateBody(resetPasswordSchema),
