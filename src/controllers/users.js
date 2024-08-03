@@ -1,12 +1,21 @@
 import createHttpError from 'http-errors';
-import {env} from '../utils/env.js';
-import { registerUser } from '../services/users.js ';
-import { getTotalUsers, loginUser, logoutUser, refreshUsersSession,requestResetToken, resetPassword, updateCurrentUser } from '../services/users.js';
 import { SEVEN_DAY } from '../constants/index.js';
-import { generateAuthUrl } from '../utils/googleOAuth2.js';
-import { loginOrSignupWithGoogle } from '../services/users.js';
+import { env } from '../utils/env.js';
 import {saveFileToCloudinary} from '../utils/saveFileToCloudinary.js';
-import {saveFileToUploadDir} from '../utils/saveFileToUploadDir.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { generateAuthUrl } from '../utils/googleOAuth2.js';
+import {
+  getTotalUsers,
+  registerUser,
+  loginUser,
+  logoutUser,
+  refreshUsersSession,
+  requestResetToken,
+  resetPassword,
+  updateCurrentUser,
+  loginOrSignupWithGoogle
+} from '../services/users.js';
+
 
 export const getTotalUsersController = async (req, res) => {
   try {
