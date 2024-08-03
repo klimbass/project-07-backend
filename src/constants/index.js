@@ -7,3 +7,11 @@ export const MONGO_DB = {
 
 export const FORTY_MINUTES = 40 * 60 * 1000;
 export const SEVEN_DAY = 7 * 24 * 60 * 60 * 1000;
+
+export const SMTP = {
+  SMTP_HOST: 'SMTP_HOST',
+  SMTP_PORT: 'SMTP_PORT',
+  SMTP_USER: 'SMTP_USER',
+  SMTP_PASSWORD: 'SMTP_PASSWORD',
+  SMTP_FROM: 'SMTP_FROM',
+};
