@@ -1,0 +1,23 @@
+type: object
+required:
+  - _id
+  - volume
+  - date
+  - userId
+properties:
+  _id:
+    description: 'Card id'
+    type: string
+    example: '66ad21159acfa4bd9e5cfd1f'
+  volume:
+    description: 'Amount of water consumed in ml'
+    type: number
+    example: 200
+  date:
+    description: 'Time of consumption'
+    type: string
+    example: '2024-08-02T21:00'
+  userId:
+    description: 'userId'
+    type: string
+    example: '66ad095ebb6eafe76d8d67d8'
