@@ -9,6 +9,6 @@ export const parseMonthParams = (req, res, next) => {
   req.body.date = newDate;
   next();
   return;
-  };
+};
 
 export default parseMonthParams;
