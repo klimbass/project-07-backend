@@ -35,8 +35,8 @@ usersRouter.post(
   validateBody(loginUserSchema),
   ctrlWrapper(loginUserController),
 );
-usersRouter.post('/logout', ctrlWrapper(logoutUserController));
-usersRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
+usersRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
+usersRouter.post('/refresh', authenticate, ctrlWrapper(refreshUserSessionController));
 //створення посилання для гугл аутентифікації
 usersRouter.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
 //Створення логіну ueuk

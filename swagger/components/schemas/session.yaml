@@ -1,0 +1,29 @@
+type: object
+required:
+  - accessToken
+  - refreshToken
+  - accessTokenValidUntil
+  - refreshTokenValidUntil
+properties:
+  _id:
+    description: 'User unique id'
+    type: string
+    example: '66ae0f3b12dc5aef6c7f43ef'
+  accessToken:
+    description: 'JWT access token for the user'
+    type: string
+    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiooomFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+  refreshToken:
+    description: 'JWT refresh token for the user'
+    type: string
+    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+  accessTokenValidUntil:
+    description: 'Timestamp indicating when the access token expires'
+    type: string
+    format: date-time
+    example: '2024-08-04T12:00:00Z'
+  refreshTokenValidUntil:
+    description: 'Timestamp indicating when the refresh token expires'
+    type: string
+    format: date-time
+    example: '2024-08-04T12:00:00Z'

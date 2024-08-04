@@ -1,0 +1,54 @@
+tags:
+  - User
+summary: Authenticate a user
+operationId: loginUser
+description: 'Authenticate a user and return a JWT token.'
+security: []
+requestBody:
+  description: 'User login details.'
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: 'User email'
+            type: string
+            example: john.doe@email.com
+          password:
+            description: 'User password'
+            type: string
+            example: 'P@ssw0rd123'
+responses:
+  '200':
+    description: 'User authenticated successfully'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully logged in an user!'
+            data:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: 'JWT token for authenticated user'
+                  example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'

@@ -140,7 +140,7 @@ export const getCurrentUserController = async (req, res, next) => {
 
     res.json({
     status: 200,
-    message: `Current user with ID ${user._id} successfully found`,
+    message: 'Successfully retrieved current user information.',
     data: user,
   });
 } catch (err) {

@@ -9,8 +9,8 @@ info:
 tags:
   - name: Water
     description: Operations related to managing water consumption.
-  - name: Auth
-    description: Auth operations.
+  - name: User
+    description: Operations related to managing users profiles.
 servers:
   # update server url when we go live
   - url: http://localhost:3000
@@ -24,6 +24,30 @@ paths:
       $ref: ../swagger/paths/water/{id}/patch.yaml
     delete:
       $ref: ../swagger/paths/water/{id}/delete.yaml
+  /users/total:
+    get:
+      $ref: ../swagger/paths/users/get/total.yaml
+  /users/get-oauth-url:
+    get:
+      $ref: ../swagger/paths/users/get/get-oauth-url.yaml
+  /users/current:
+    get:
+      $ref: ../swagger/paths/users/get/current.yaml
+  /users/update:
+    patch:
+      $ref: ../swagger/paths/users/patch/update.yaml
+  /users/register:
+    post:
+      $ref: ../swagger/paths/users/post/register.yaml
+  /users/login:
+    post:
+      $ref: ../swagger/paths/users/post/login.yaml
+  /users/logout:
+    post:
+      $ref: ../swagger/paths/users/post/logout.yaml
+  /users/refresh:
+    post:
+      $ref: ../swagger/paths/users/post/refresh.yaml
 components:
   securitySchemes:
     bearerAuth:
