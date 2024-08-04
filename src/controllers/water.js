@@ -3,7 +3,7 @@ import { createCard, patchCard, deleteCard, getMonthWater } from '../services/wa
 
 
 
-export const getMonthWoterController = async (req, res) => {
+export const getMonthWaterController = async (req, res) => {
   const {date}= req.body;
   const { _id: userId } = req.user;
   const data = await getMonthWater(userId, date);

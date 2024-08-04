@@ -9,6 +9,6 @@ const parseDayParams = (req, res, next) => {
   req.body.date = newDate;
   next();
   return;
-  };
+};
 
 export default parseDayParams;

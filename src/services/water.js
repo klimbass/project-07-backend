@@ -5,11 +5,11 @@ export const getMonthWater = async (userId, day) => {
 
   const matchForUserIdandDate = {
     $match: { userId: userId, date: { $regex: day } },
-  };
-  
+   };
+
   const setDate = {$set: {
         date: { $toDate: '$date' }
-    }};
+   }};
 
   const sort = { $sort: { [SORT_BY[1]]: SORT_ORDER_ARRAY[0] } };
   const groupByDays = {
@@ -17,18 +17,17 @@ export const getMonthWater = async (userId, day) => {
       _id: { $dayOfMonth: '$date'},
       dayAmount: { $sum: '$volume' },
       totalForDay: { $sum: 1 },
-    },
-  };
-   
+    },};
+
   const setDay= {$set: {
-    dayOfMonth: '$_id' 
-}};
+    dayOfMonth: '$_id'
+   }};
    const unset = {$unset:["_id"]};
 
-  
+
    const items = await WaterCollection.aggregate([matchForUserIdandDate]);
-  const totalItems = await WaterCollection.countDocuments([matchForUserIdandDate]);
-  const waterAmount = await WaterCollection.aggregate([
+   const totalItems = await WaterCollection.countDocuments([matchForUserIdandDate]);
+   const waterAmount = await WaterCollection.aggregate([
     matchForUserIdandDate, setDate,
     sort,
     groupByDays, setDay, unset
