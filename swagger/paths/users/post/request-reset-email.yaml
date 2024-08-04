@@ -1,0 +1,78 @@
+tags:
+  - User
+summary: Request reset email
+operationId: requestResetEmail
+description: 'send email for reset password'
+security: []
+requestBody:
+  description: User email
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+        properties:
+          email:
+            type: string
+            format: email
+            example: johndoe@example.com
+responses:
+  '200':
+    description: Reset password email was successfully sent!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Reset password email was successfully sent!
+            data:
+              type: object
+  '404':
+    description: User not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: User not found
+            data:
+              type: object
+  '500':
+    description: Failed to send the email, please try again later.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 500
+            message:
+              type: string
+              example: Something went wrong
+            data:
+              type: object

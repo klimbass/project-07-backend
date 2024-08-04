@@ -48,6 +48,12 @@ paths:
   /users/refresh:
     post:
       $ref: ../swagger/paths/users/post/refresh.yaml
+  /users/request-reset-email:
+    post:
+      $ref: ../swagger/paths/users/post/request-reset-email.yaml
+  /users/reset-password:
+    post:
+      $ref: ../swagger/paths/users/post/reset-password.yaml
 components:
   securitySchemes:
     bearerAuth:
