@@ -177,6 +177,13 @@ export const requestResetToken = async (email) => {
     to: email,
     subject: 'Reset your password',
     html,
+    attachments: [
+      {
+        filename: 'AquaTrack.png',
+        path: path.resolve('src', 'logo/AquaTrack.png'),
+        cid: 'logo',
+      },
+    ],
   });
 };
 
@@ -203,15 +210,11 @@ export const resetPassword = async (payload) => {
 };
 
 export const updateCurrentUser = async (userId, data, options = {}) => {
-  const result = await UsersCollection.findOneAndUpdate(
-    { _id: userId},
-    data,
-    {
-      new: true,
-      includeResultMetadata: true,
-      ...options,
-  },
-  );
+  const result = await UsersCollection.findOneAndUpdate({ _id: userId }, data, {
+    new: true,
+    includeResultMetadata: true,
+    ...options,
+  });
 
   if (!result || !result.value) return null;
 
