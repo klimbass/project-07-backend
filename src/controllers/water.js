@@ -1,5 +1,20 @@
-import { createCard, patchCard, deleteCard } from '../services/water.js';
 import createHttpError from 'http-errors';
+import { createCard, patchCard, deleteCard, getMonthWater } from '../services/water.js';
+
+
+
+export const getMonthWaterController = async (req, res) => {
+  const {date}= req.body;
+  const { _id: userId } = req.user;
+  const data = await getMonthWater(userId, date);
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully found drinks for ${date}!`,
+    data
+
+  });
+};
 
 export const createCardController = async (req, res) => {
   const cardData = {

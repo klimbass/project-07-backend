@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
+import {authenticate} from '../middlewares/authenticate.js';
+import {upload} from '../middlewares/multer.js';
 import {
   registerUserSchema,
   loginUserSchema,
@@ -20,16 +22,19 @@ import {
   requestResetEmailController,
   resetPasswordController,getCurrentUserController, updateCurrentUserController
 } from '../controllers/users.js';
-import {authenticate} from '../middlewares/authenticate.js';
-import {upload} from '../middlewares/multer.js';
+
 
 const usersRouter = Router();
-usersRouter.get('/total', ctrlWrapper(getTotalUsersController)); //отримання загальної кількості зареєстрованих у застосунку користувачів
+usersRouter.get(
+  '/total',
+  ctrlWrapper(getTotalUsersController));
+
 usersRouter.post(
   '/register',
   validateBody(registerUserSchema),
   ctrlWrapper(registerUserController),
 );
+
 usersRouter.post(
   '/login',
   validateBody(loginUserSchema),
@@ -37,17 +42,40 @@ usersRouter.post(
 );
 usersRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
 usersRouter.post('/refresh', authenticate, ctrlWrapper(refreshUserSessionController));
+
+usersRouter.post(
+  '/logout',
+  ctrlWrapper(logoutUserController));
+
+usersRouter.post(
+  '/refresh',
+  ctrlWrapper(refreshUserSessionController));
+
+usersRouter.get(
+  '/current',
+  authenticate,
+  ctrlWrapper(getCurrentUserController));
+
+usersRouter.patch(
+  '/update',
+  authenticate,
+  upload.single('avatar'),
+  validateBody(updateUserSchema),
+  ctrlWrapper(updateCurrentUserController));
+
 //створення посилання для гугл аутентифікації
-usersRouter.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
-//Створення логіну ueuk
+usersRouter.get(
+  '/get-oauth-url',
+  ctrlWrapper(getGoogleOAuthUrlController));
+
+//Створення логіну
 usersRouter.post(
  '/confirm-oauth',
-   validateBody(loginWithGoogleOAuthSchema),
-   ctrlWrapper(loginWithGoogleController),
+  validateBody(loginWithGoogleOAuthSchema),
+  ctrlWrapper(loginWithGoogleController),
 );
-//Створення роутів на отримання та оновлення даних поточного користувача
-usersRouter.get( '/current', authenticate, ctrlWrapper(getCurrentUserController));
-usersRouter.patch( '/update', authenticate, upload.single('avatar'), validateBody(updateUserSchema),ctrlWrapper(updateCurrentUserController));usersRouter.post(
+
+usersRouter.post(
   '/request-reset-email',
   validateBody(requestResetEmailSchema),
   ctrlWrapper(requestResetEmailController),
