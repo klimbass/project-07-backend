@@ -2,14 +2,15 @@ import createHttpError from 'http-errors';
 import { createCard, patchCard, deleteCard, getMonthWater } from '../services/water.js';
 
 
+
 export const getMonthWoterController = async (req, res) => {
+  const {date}= req.body;
   const { _id: userId } = req.user;
-  const {date} = req.body;
   const data = await getMonthWater(userId, date);
 
   res.status(200).json({
     status: 200,
-    message: `Successfully found drinks!`,
+    message: `Successfully found drinks for ${date}!`,
     data
 
   });

@@ -14,7 +14,8 @@ import {
   deleteCardController,
   getMonthWoterController
 } from '../controllers/water.js';
-
+import  parseDayParams  from '../utils/day.js';
+import parseMonthParams from '../utils/month.js';
 
 const waterRouter = Router();
 
@@ -36,9 +37,9 @@ waterRouter.patch(
 waterRouter.delete('/:cardId', isValidId, ctrlWrapper(deleteCardController));
 
 // створити приватний ендпоінт для отримання даних щодо спожитої користувачем води за день
-waterRouter.get('/day',validateBody(searchByDayCardSchema), ctrlWrapper(getMonthWoterController)); //'?' - не обов'зковий параметр. Якщо не вказан, дати за поточний день
+waterRouter.get('/day',validateBody(searchByDayCardSchema),parseDayParams,ctrlWrapper(getMonthWoterController)); //'?' - не обов'зковий параметр. Якщо не вказан, дати за поточний день
 
 // створити приватний ендпоінт для отримання даних щодо спожитої користувачем води за місяць
-waterRouter.get('/month', validateBody(searchByMonthCardSchema), ctrlWrapper(getMonthWoterController)); 
+waterRouter.get('/month', validateBody(searchByMonthCardSchema),parseMonthParams, ctrlWrapper(getMonthWoterController)); 
 
 export default waterRouter;
