@@ -35,9 +35,9 @@ waterRouter.patch(
 waterRouter.delete('/:cardId', isValidId, ctrlWrapper(deleteCardController));
 
 // створити приватний ендпоінт для отримання даних щодо спожитої користувачем води за день
-waterRouter.get('/:day', ctrlWrapper(getWaterCardsController)); //'?' - не обов'зковий параметр. Якщо не вказан, дати за поточний день
+waterRouter.get('/day', ctrlWrapper(getWaterCardsController)); //'?' - не обов'зковий параметр. Якщо не вказан, дати за поточний день
 
 // створити приватний ендпоінт для отримання даних щодо спожитої користувачем води за місяць
-waterRouter.get('/:month'); // типу так само як з днем
+waterRouter.get('/month', ctrlWrapper(getWaterCardsController)); // типу так само як з днем
 
 export default waterRouter;

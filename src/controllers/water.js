@@ -3,8 +3,8 @@ import createHttpError from 'http-errors';
 
 export const getWaterCardsController = async (req, res) => {
   const { _id: userId } = req.user;
-  const { day} = req.params;
-  const data = await getWaterCards(userId, day);
+  const {date} = req.body;
+  const data = await getWaterCards(userId, date);
 
   res.status(200).json({
     status: 200,
