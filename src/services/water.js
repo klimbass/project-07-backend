@@ -13,7 +13,7 @@ export const getWaterCards = async (userId, day, sortBy) => {
     { $match: { date: { $regex: day } } },
     { $group: { _id: day, amount: { $sum: '$volume' } } },
   ]);
-  return { items, totalItems, waterAmount };
+  return { items, totalItems, waterAmount};
 };
 
 export const createCard = async (payload) => {

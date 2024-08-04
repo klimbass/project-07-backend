@@ -9,7 +9,7 @@ export const getWaterCardsController = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    message: `Successfully found cards!`,
+    message: `Successfully found drinks!`,
     data,
 
   });
