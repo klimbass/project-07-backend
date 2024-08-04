@@ -40,6 +40,8 @@ usersRouter.post(
   validateBody(loginUserSchema),
   ctrlWrapper(loginUserController),
 );
+usersRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
+usersRouter.post('/refresh', authenticate, ctrlWrapper(refreshUserSessionController));
 
 usersRouter.post(
   '/logout',

@@ -1,0 +1,69 @@
+tags:
+  - User
+summary: Update current user information
+operationId: updateCurrentUser
+description: 'Via this endpoint you can update the information about current user'
+security:
+  - bearerAuth: []
+requestBody:
+  description: 'Update information about current user'
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            description: 'User name'
+            type: string
+            example: 'John Doe'
+          email:
+            description: 'User email'
+            type: string
+            example: john.doe@email.com
+          gender:
+            description: 'User gender'
+            type: string
+            enum: ['woman', 'man']
+            example: 'man'
+          weight:
+            description: 'User weight in kilograms'
+            type: number
+            example: 70
+          dailyActivityTime:
+            description: 'User daily activity time in hours'
+            type: number
+            example: 2
+          dailyWaterNorm:
+            description: 'User daily water intake norm in liters'
+            type: number
+            example: 1.5
+          avatar:
+            description: 'URL to the user avatar image'
+            type: string
+            example: 'https://res.cloudinary.com/dpfbagody/image/upload/v1721821993/samples/man-on-a-street.jpg'
+responses:
+  '200':
+    description: 'User information successfully updated!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'User information successfully updated!'
+            data:
+              type: object
+              $ref: '../../../components/schemas/user.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'

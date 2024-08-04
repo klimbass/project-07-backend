@@ -1,0 +1,39 @@
+type: object
+required:
+  - _id
+  - name
+  - email
+properties:
+  _id:
+    description: 'User unique id'
+    type: string
+    example: '66ae0f3b12dc5aef6c7f43ef'
+  name:
+    description: 'User name'
+    type: string
+    example: 'John Doe'
+  email:
+    description: 'User email'
+    type: string
+    example: john.doe@email.com
+  gender:
+    description: 'User gender'
+    type: string
+    enum: ['woman', 'man']
+    example: 'man'
+  weight:
+    description: 'User weight in kilograms'
+    type: number
+    example: 70
+  dailyActivityTime:
+    description: 'User daily activity time in hours'
+    type: number
+    example: 2
+  dailyWaterNorm:
+    description: 'User daily water intake norm in liters'
+    type: number
+    example: 1.5
+  avatar:
+    description: 'URL to the user avatar image'
+    type: string
+    example: 'https://res.cloudinary.com/dpfbagody/image/upload/v1721821993/samples/man-on-a-street.jpg'

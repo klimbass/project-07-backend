@@ -1,0 +1,31 @@
+tags:
+  - User
+summary: Get the OAuth URL
+operationId: generateAuthUrl
+description: 'You receive the OAuth URL for Google authentication.'
+security: []
+responses:
+  '200':
+    description: 'Successfully get Google OAuth url!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully get Google OAuth url!'
+            data:
+              type: string
+              example: 'https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&client_id=730286863518-q2sp0vlht0udk97qfj2aomij8ovrh3li.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Faquatrackerapp.onrender.com'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
