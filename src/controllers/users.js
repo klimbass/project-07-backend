@@ -1,15 +1,21 @@
-import { registerUser } from '../services/users.js ';
+import createHttpError from 'http-errors';
+import { SEVEN_DAY } from '../constants/index.js';
+import { env } from '../utils/env.js';
+import {saveFileToCloudinary} from '../utils/saveFileToCloudinary.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { generateAuthUrl } from '../utils/googleOAuth2.js';
 import {
   getTotalUsers,
+  registerUser,
   loginUser,
   logoutUser,
   refreshUsersSession,
   requestResetToken,
   resetPassword,
+  updateCurrentUser,
+  loginOrSignupWithGoogle
 } from '../services/users.js';
-import { SEVEN_DAY } from '../constants/index.js';
-import { generateAuthUrl } from '../utils/googleOAuth2.js';
-import { loginOrSignupWithGoogle } from '../services/users.js';
+
 
 export const getTotalUsersController = async (req, res) => {
   try {
@@ -135,6 +141,46 @@ export const loginWithGoogleController = async (req, res) => {
       accessToken: session.accessToken,
     },
   });
+};
+
+export const getCurrentUserController = async (req, res, next) => {
+  try {
+    const user = req.user;
+
+    res.json({
+    status: 200,
+    message: `Current user with ID ${user._id} successfully found`,
+    data: user,
+  });
+} catch (err) {
+  next (err);
+}
+};
+
+export const updateCurrentUserController = async (req, res, next) => {
+  const { _id: userId } = req.user;
+  const data = req.body;
+  let photoUrl;
+
+  if(req.file) {
+    if (env('ENABLE_CLOUDINARY')==='true') {
+      photoUrl = await saveFileToCloudinary(req.file, 'users');
+  } else {
+      photoUrl = await saveFileToUploadDir(req.file, 'users');
+  }
+}
+
+  const updatedResult = await updateCurrentUser(userId, {...data, avatar: photoUrl});
+
+  if (!updatedResult) {
+    return next(createHttpError(404, 'User not found'));
+}
+
+res.json({
+    status: 200,
+    message: 'User information successfully updated!',
+    data: updatedResult,
+});
 };
 
 export const requestResetEmailController = async (req, res) => {

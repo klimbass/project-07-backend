@@ -1,0 +1,53 @@
+tags:
+  - Water
+summary: Create water card
+operationId: createCard
+description: 'Create a card with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - volume
+          - date
+        properties:
+          volume:
+            description: 'Amount of water consumed in ml'
+            type: number
+            example: 200
+          date:
+            description: 'Time of consumption'
+            type: string
+            example: '2024-08-02T21:00'
+responses:
+  '201':
+    description: Successfully created a card!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully created a card!
+            data:
+              type: object
+              $ref: '../../components/schemas/water.yaml'
+  '400':
+    $ref: '../../components/responses/400.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

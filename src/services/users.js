@@ -201,3 +201,22 @@ export const resetPassword = async (payload) => {
     { password: encryptedPassword },
   );
 };
+
+export const updateCurrentUser = async (userId, data, options = {}) => {
+  const result = await UsersCollection.findOneAndUpdate(
+    { _id: userId},
+    data,
+    {
+      new: true,
+      includeResultMetadata: true,
+      ...options,
+  },
+  );
+
+  if (!result || !result.value) return null;
+
+  return {
+    contact: result.value,
+    isNew: Boolean(result?.lastErrorObject?.upserted),
+  };
+};
