@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import {dateAndTimeRegex, dateRegex, monthRegex} from '../constants/index.js';
+import {DATE_AND_TIME_REGEX, DATE_REGEX, MONTH_REGEX} from '../constants/index.js';
 
 export const createCardSchema = Joi.object({
   volume: Joi.number().integer().required().min(1).max(5000).messages({
@@ -8,7 +8,7 @@ export const createCardSchema = Joi.object({
     'number.max': 'Amount should be at most 5000 ml',
     'any.required': 'Amount is required',
   }),
-  date: Joi.string().pattern(dateAndTimeRegex).messages({
+  date: Joi.string().pattern(DATE_AND_TIME_REGEX).messages({
     'string.pattern.base': 'Date and time should exist in a year range 2020 to 2099 and match format YYYY-MM-DD HH:MM For example 2024-02-29 07:54',
   }),
 });
@@ -19,7 +19,7 @@ export const updateCardSchema = Joi.object({
     'number.min': 'Amount should be at least 1 ml',
     'number.max': 'Amount should be at most 5000 ml',
   }),
-  date: Joi.string().pattern(dateAndTimeRegex).messages({
+  date: Joi.string().pattern(DATE_AND_TIME_REGEX).messages({
     'string.pattern': 'Date and time should exist in a year range 2020 to 2099 and match format YYYY-MM-DD HH:MM For example 2024-02-29 07:54',
   }),
 })
@@ -29,13 +29,13 @@ export const updateCardSchema = Joi.object({
   });
 
   export const searchByDayCardSchema = Joi.object({
-    date: Joi.string().required().pattern(dateRegex).messages({
+    date: Joi.string().required().pattern(DATE_REGEX).messages({
       'string.required': 'Date is required',
       'string.pattern.base': 'Date should exist in a year range 2020 to 2099. For example 2024-02-29',
     }),
   });
   export const searchByMonthCardSchema = Joi.object({
-    date: Joi.string().required().pattern(monthRegex).messages({
+    date: Joi.string().required().pattern(MONTH_REGEX).messages({
       'string.required': 'Date is required',
       'string.pattern.base': 'Date should exist in a year range 2020 to 2099. For example 2024-02',
     }),

@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { dateAndTimeRegex } from '../../constants/index.js';
+import { DATE_AND_TIME_REGEX } from '../../constants/index.js';
 
 const getCurrentDate = () => {
     const now = new Date();
@@ -9,7 +9,7 @@ const getCurrentDate = () => {
 
 //Checks date for the pattern
 function validator(date) {
-  return dateAndTimeRegex.test(date);
+  return DATE_AND_TIME_REGEX.test(date);
 }
 
 const waterSchema = new Schema(
