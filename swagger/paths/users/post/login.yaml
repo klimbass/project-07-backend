@@ -44,6 +44,8 @@ responses:
             data:
               type: object
               properties:
+                user:
+                  $ref: '../../../components/schemas/user.yaml'
                 token:
                   type: string
                   description: 'JWT token for authenticated user'
