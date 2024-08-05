@@ -122,6 +122,7 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   });
 };
 
+
 export const loginOrSignupWithGoogle = async (code) => {
   const loginTicket = await validateCode(code);
   const payload = loginTicket.getPayload();
@@ -129,21 +130,21 @@ export const loginOrSignupWithGoogle = async (code) => {
 
   let user = await UsersCollection.findOne({ email: payload.email });
   if (!user) {
-    const password = await bcrypt.hash(randomBytes(10), 10);
+    const password = await bcrypt.hash(randomBytes(10).toString('hex'), 10);
     user = await UsersCollection.create({
       email: payload.email,
       name: getFullNameFromGoogleTokenPayload(payload),
       password,
-      role: 'parent',
     });
   }
 
   const newSession = createSession();
-
-  return await SessionsCollection.create({
+  const session = await SessionsCollection.create({
     userId: user._id,
     ...newSession,
   });
+
+  return { user, session };
 };
 
 export const requestResetToken = async (email) => {
