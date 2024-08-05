@@ -60,8 +60,9 @@ export const registerUserController = async (req, res) => {
   });
 };
 
+
 export const loginUserController = async (req, res) => {
-  const session = await loginUser(req.body);
+  const { user, session } = await loginUser(req.body);
 
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
@@ -74,8 +75,9 @@ export const loginUserController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'Successfully logged in an user!',
+    message: 'Successfully logged in a user!',
     data: {
+      user,
       accessToken: session.accessToken,
     },
   });
@@ -130,14 +132,19 @@ export const getGoogleOAuthUrlController = async (req, res) => {
   });
 };
 
+
+
 export const loginWithGoogleController = async (req, res) => {
-  const session = await loginOrSignupWithGoogle(req.body.code);
+
+  const { user, session } = await loginOrSignupWithGoogle(req.body.code);
+
   setupSession(res, session);
 
   res.json({
     status: 200,
-    message: 'Successfully logged in via Google OAuth!',
+    message: 'Successfully logged in or signed up with Google!',
     data: {
+      user,
       accessToken: session.accessToken,
     },
   });
