@@ -170,7 +170,7 @@ export const updateCurrentUserController = async (req, res, next) => {
   }
 }
 
-  const updatedResult = await updateCurrentUser(userId, {...data, avatar: photoUrl});
+const updatedResult = await updateCurrentUser(userId, {...data, avatar: photoUrl});
 
   if (!updatedResult) {
     return next(createHttpError(404, 'User not found'));

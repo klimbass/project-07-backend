@@ -39,8 +39,9 @@ requestBody:
             type: number
             example: 1.5
           avatar:
-            description: 'URL to the user avatar image'
+            description: 'User avatar image'
             type: string
+            format: binary
             example: 'https://res.cloudinary.com/dpfbagody/image/upload/v1721821993/samples/man-on-a-street.jpg'
 responses:
   '200':
