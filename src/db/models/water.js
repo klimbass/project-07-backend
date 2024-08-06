@@ -22,7 +22,6 @@ const waterSchema = new Schema(
       type: String,
       validate: validator,
       required: true,
-      default: getCurrentDate
     },
     userId: {
       type: Schema.Types.ObjectId,
