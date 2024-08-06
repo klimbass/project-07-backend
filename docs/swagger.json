@@ -248,6 +248,137 @@
         }
       }
     },
+    "/water/day": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get list of drinks",
+        "operationId": "getDayWater",
+        "description": "Get list of customer drinks for particular day with this endpoint",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Optional description in *Markdown*",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "description": "Only existing dates between 2020 and 2099 are acceptable",
+                    "type": "string",
+                    "example": "2024-08-05"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return array with drinks for a day",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Drinks found!"
+                    },
+                    "data": {
+                      "type": "array",
+                      "$ref": "#/components/schemas/water"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/water/month": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get list of drinks",
+        "operationId": "getMonthWater",
+        "description": "Get list of customer drinks for particular month with this endpoint",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "description": "Only existing dates between 2020 and 2099 are acceptable",
+                    "type": "string",
+                    "example": "2024-08"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return array with drinks for a month",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found drinks!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/waterForMonth"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/users/total": {
       "get": {
         "tags": [
@@ -1079,6 +1210,54 @@
             "description": "userId",
             "type": "string",
             "example": "66ad095ebb6eafe76d8d67d8"
+          }
+        }
+      },
+      "waterAmount": {
+        "type": "object",
+        "required": [
+          "statusdayAmount",
+          "totalForDay",
+          "dayOfMonth"
+        ],
+        "properties": {
+          "statusdayAmount": {
+            "type": "number",
+            "example": 1720,
+            "description": "Sum of consumed water by user for one day in a given month"
+          },
+          "totalForDay": {
+            "type": "number",
+            "example": 3,
+            "description": "A number of entries for for one day in a given month"
+          },
+          "dayOfMonth": {
+            "type": "number",
+            "example": 5,
+            "description": "A day of a given month"
+          }
+        }
+      },
+      "waterForMonth": {
+        "type": "object",
+        "required": [
+          "items",
+          "totalitems",
+          "waterAmount"
+        ],
+        "properties": {
+          "items": {
+            "$ref": "#/components/schemas/water"
+          },
+          "waterAmount": {
+            "description": "Data about user consumption",
+            "type": "array",
+            "$ref": "#/components/schemas/waterAmount"
+          },
+          "totalitems": {
+            "description": "Total entries for a given month",
+            "type": "number",
+            "example": 21
           }
         }
       },

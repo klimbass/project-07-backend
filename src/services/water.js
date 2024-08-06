@@ -1,12 +1,13 @@
 import { SORT_ORDER_ARRAY, SORT_BY } from '../constants/index.js';
 import { WaterCollection } from '../db/models/water.js';
+import totalCheck from '../utils/totalCheck.js';
 
 export const getMonthWater = async (userId, day) => {
   const matchForUserIdandDate = {
     $match: { userId: userId, date: { $regex: day } },
   };
 
-  const count = { $count: "totalItems"};
+  const count = { $count: 'totalItems' };
 
   const setDate = {
     $set: {
@@ -31,7 +32,10 @@ export const getMonthWater = async (userId, day) => {
   const unset = { $unset: ['_id'] };
 
   const items = await WaterCollection.aggregate([matchForUserIdandDate]);
-  const totalItems = await WaterCollection.aggregate([matchForUserIdandDate, count]);
+  const totalItems = await WaterCollection.aggregate([
+    matchForUserIdandDate,
+    count,
+  ]);
   const waterAmount = await WaterCollection.aggregate([
     matchForUserIdandDate,
     setDate,
@@ -40,8 +44,8 @@ export const getMonthWater = async (userId, day) => {
     setDay,
     unset,
   ]);
-
-  return { items, totalItems, waterAmount };
+  const parseTotalItems = totalCheck(totalItems);
+  return { items, waterAmount, total:parseTotalItems };
 };
 
 export const createCard = async (payload) => {
