@@ -43,6 +43,9 @@ responses:
               example: 'Successfully logged in an user!'
             data:
               type: object
+              required:
+                - user
+                - token
               properties:
                 user:
                   $ref: '../../../components/schemas/user.yaml'

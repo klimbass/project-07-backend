@@ -560,18 +560,25 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/user"
+                      "required": [
+                        "user",
+                        "token"
+                      ],
+                      "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/user"
+                        },
+                        "token": {
+                          "type": "string",
+                          "description": "JWT token for authenticated user",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
           },
           "409": {
             "$ref": "#/components/responses/409"
@@ -638,7 +645,14 @@
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "user",
+                        "token"
+                      ],
                       "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/user"
+                        },
                         "token": {
                           "type": "string",
                           "description": "JWT token for authenticated user",
