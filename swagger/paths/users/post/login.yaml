@@ -43,7 +43,12 @@ responses:
               example: 'Successfully logged in an user!'
             data:
               type: object
+              required:
+                - user
+                - token
               properties:
+                user:
+                  $ref: '../../../components/schemas/user.yaml'
                 token:
                   type: string
                   description: 'JWT token for authenticated user'
