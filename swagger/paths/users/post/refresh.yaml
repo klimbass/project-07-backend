@@ -2,23 +2,22 @@ tags:
   - User
 summary: Refresh user session
 operationId: refreshUsersSession
-description: 'Refresh the current user session by providing a new JWT token.'
+description: 'Refresh the current user session by providing a session ID and refresh token.'
 security:
   - bearerAuth: []
-requestBody:
-  description: 'Refresh token details.'
-  required: true
-  content:
-    application/json:
-      schema:
-        type: object
-        required:
-          - refreshToken
-        properties:
-          refreshToken:
-            description: 'JWT refresh token for the user'
-            type: string
-            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+parameters:
+  - in: cookie
+    name: sessionId
+    schema:
+      type: string
+    required: true
+    description: 'Session ID cookie'
+  - in: cookie
+    name: refreshToken
+    schema:
+      type: string
+    required: true
+    description: 'Refresh token cookie'
 responses:
   '200':
     description: 'Session refreshed successfully'
