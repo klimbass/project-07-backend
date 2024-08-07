@@ -1,16 +1,29 @@
 import createHttpError from 'http-errors';
 import { createCard, patchCard, deleteCard, getMonthWater } from '../services/water.js';
-
+import {DATE_REGEX, MONTH_REGEX, PARSE_DATE_PARAMS} from '../constants/index.js';
+import getCurrentDate from '../utils/parseDate.js';
 
 
 export const getMonthWaterController = async (req, res) => {
-  const {date}= req.body;
+  const parsedDate = getCurrentDate(req.query, PARSE_DATE_PARAMS[0], MONTH_REGEX);
   const { _id: userId } = req.user;
-  const data = await getMonthWater(userId, date);
+  const data = await getMonthWater(userId, parsedDate);
 
   res.status(200).json({
     status: 200,
-    message: `Successfully found drinks for ${date}!`,
+    message: `Successfully found drinks for ${parsedDate}!`,
+    data
+
+  });
+};
+export const getDayhWaterController = async (req, res) => {
+  const parsedDate = getCurrentDate(req.query, PARSE_DATE_PARAMS[1], DATE_REGEX);
+  const { _id: userId } = req.user;
+  const data = await getMonthWater(userId, parsedDate);
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully found drinks for ${parsedDate}!`,
     data
 
   });

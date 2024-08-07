@@ -34,3 +34,5 @@ export const MONTH_REGEX = /^(?:20[2-9][0-9])-(?:(?:0[1-9]|1[0-2]))$/;
 
 export const SORT_BY = ['date', '_id'];
 export const SORT_ORDER_ARRAY = [ 1, -1];
+
+export const PARSE_DATE_PARAMS = [8,10];
