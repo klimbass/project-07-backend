@@ -16,7 +16,7 @@ properties:
   date:
     description: 'Time of consumption'
     type: string
-    example: '2024-08-02T21:00'
+    example: '2024-08-02 21:00'
   userId:
     description: 'userId'
     type: string

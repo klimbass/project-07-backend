@@ -1,4 +1,3 @@
-
 tags:
   - Water
 summary: Get list of drinks
@@ -11,11 +10,11 @@ parameters:
     name: date
     schema:
       type: string
-      description: "Only existing dates as format YYYY:MM between 2020 and 2099 are acceptable "
+      description: 'Only existing dates as format YYYY:MM between 2020 and 2099 are acceptable '
       example: '2024-08'
 responses:
   '200':
-    description: Return array with drinks for a month 
+    description: Return array with drinks for a month
     content:
       application/json:
         schema:
@@ -33,7 +32,6 @@ responses:
               example: Successfully found drinks!
             data:
               type: object
-              $ref: '..\..\..\components\schemas\waterForMonth.yaml'
+              $ref: '../../../components/schemas/waterForMonth.yaml'
   '401':
     $ref: '../../../components/responses/401.yaml'
-

@@ -1,4 +1,3 @@
-
 tags:
   - Water
 summary: Get list of drinks
@@ -11,7 +10,7 @@ parameters:
     name: date
     schema:
       type: string
-      description: "Only existing dates as format YYYY:MM:DD between 2020 and 2099 are acceptable"
+      description: 'Only existing dates as format YYYY:MM:DD between 2020 and 2099 are acceptable'
       example: '2024-08-05'
 responses:
   '200':
@@ -32,8 +31,7 @@ responses:
               type: string
               example: Drinks found!
             data:
-              type: array
-              $ref: ..\..\..\components\schemas\water.yaml
+              type: object
+              $ref: '../../../components/schemas/water.yaml'
   '401':
     $ref: '../../../components/responses/401.yaml'
-

@@ -7,7 +7,7 @@ import {
   createCardSchema,
   searchByDayCardSchema,
   searchByMonthCardSchema,
-  updateCardSchema
+  updateCardSchema,
 } from '../validation/water.js';
 
 import {
@@ -15,9 +15,8 @@ import {
   patchCardController,
   deleteCardController,
   getMonthWaterController,
-  getDayhWaterController
+  getDayhWaterController,
 } from '../controllers/water.js';
-
 
 const waterRouter = Router();
 
@@ -38,16 +37,16 @@ waterRouter.patch(
 
 waterRouter.delete('/:cardId', isValidId, ctrlWrapper(deleteCardController));
 
-//  приватний ендпоінт для отримання даних щодо спожитої користувачем води за день
 waterRouter.get(
   '/day',
   validateBody(searchByDayCardSchema),
-  ctrlWrapper(getDayhWaterController));
+  ctrlWrapper(getDayhWaterController),
+);
 
-//  приватний ендпоінт для отримання даних щодо спожитої користувачем води за місяць
 waterRouter.get(
   '/month',
   validateBody(searchByMonthCardSchema),
-  ctrlWrapper(getMonthWaterController));
+  ctrlWrapper(getMonthWaterController),
+);
 
 export default waterRouter;
