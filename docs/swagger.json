@@ -60,7 +60,7 @@
                   "date": {
                     "description": "Time of consumption",
                     "type": "string",
-                    "example": "2024-08-02T21:00"
+                    "example": "2024-08-02 21:00"
                   }
                 }
               }
@@ -162,7 +162,7 @@
                       "date": {
                         "description": "Time of consumption",
                         "type": "string",
-                        "example": "2024-08-02T21:00"
+                        "example": "2024-08-02 21:00"
                       }
                     }
                   }
@@ -261,23 +261,17 @@
             "bearerAuth": []
           }
         ],
-        "requestBody": {
-          "description": "Optional description in *Markdown*",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "date": {
-                    "description": "Only existing dates between 2020 and 2099 are acceptable",
-                    "type": "string",
-                    "example": "2024-08-05"
-                  }
-                }
-              }
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "description": "Only existing dates as format YYYY:MM:DD between 2020 and 2099 are acceptable",
+              "example": "2024-08-05"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Return array with drinks for a day",
@@ -327,22 +321,17 @@
             "bearerAuth": []
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "date": {
-                    "description": "Only existing dates between 2020 and 2099 are acceptable",
-                    "type": "string",
-                    "example": "2024-08"
-                  }
-                }
-              }
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "description": "Only existing dates as format YYYY:MM between 2020 and 2099 are acceptable ",
+              "example": "2024-08"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Return array with drinks for a month",

@@ -6,17 +6,13 @@ operationId: getMonthWater
 description: 'Get list of customer drinks for particular month with this endpoint'
 security:
   - bearerAuth: []
-requestBody:
-  content:
-    application/json:
-      schema:
-        type: object
-        properties:
-          date:
-            description: "Only existing dates between 2020 and 2099 are acceptable"
-            type: string
-            example: '2024-08'
-    
+parameters:
+  - in: query
+    name: date
+    schema:
+      type: string
+      description: "Only existing dates as format YYYY:MM between 2020 and 2099 are acceptable "
+      example: '2024-08'
 responses:
   '200':
     description: Return array with drinks for a month 
