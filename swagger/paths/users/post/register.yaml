@@ -49,9 +49,13 @@ responses:
               properties:
                 user:
                   $ref: '../../../components/schemas/user.yaml'
-                token:
+                accessToken:
                   type: string
                   description: 'JWT token for authenticated user'
                   example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
   '409':
     $ref: '../../../components/responses/409.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
