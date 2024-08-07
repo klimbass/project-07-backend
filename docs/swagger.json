@@ -714,8 +714,8 @@
                         },
                         "accessToken": {
                           "type": "string",
-                          "description": "JWT token for authenticated user",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                          "description": "Access token for authenticated user",
+                          "example": "YBDTZRgpgFARbz3TetV4ZNylDdgPGYj4dSM8Rbuy"
                         }
                       }
                     }
@@ -805,8 +805,8 @@
                         },
                         "accessToken": {
                           "type": "string",
-                          "description": "JWT token for authenticated user",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                          "description": "Access token for authenticated user",
+                          "example": "YBDTZRgpgFARbz3TetV4ZNylDdgPGYj4dSM8Rbuy"
                         }
                       }
                     }
@@ -936,10 +936,10 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "token": {
+                        "accessToken": {
                           "type": "string",
-                          "description": "New JWT token for authenticated user",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF5T6RfwpMeJf36POk6yJV_adQssw5c"
+                          "description": "Access token for authenticated user",
+                          "example": "YBDTZRgpgFARbz3TetV4ZNylDdgPGYj4dSM8Rbuy"
                         }
                       }
                     }
@@ -1023,8 +1023,8 @@
                         },
                         "accessToken": {
                           "type": "string",
-                          "description": "JWT token for authenticated user",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                          "description": "Access token for authenticated user",
+                          "example": "YBDTZRgpgFARbz3TetV4ZNylDdgPGYj4dSM8Rbuy"
                         }
                       }
                     }
