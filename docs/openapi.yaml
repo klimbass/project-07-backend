@@ -25,6 +25,12 @@ paths:
       $ref: ../swagger/paths/water/{id}/patch.yaml
     delete:
       $ref: ../swagger/paths/water/{id}/delete.yaml
+  /water/day:
+    get:
+      $ref: ../swagger/paths/water/day/get.yaml
+  /water/month:
+    get:
+      $ref: ../swagger/paths/water/month/get.yaml
   /users/total:
     get:
       $ref: ../swagger/paths/users/get/total.yaml

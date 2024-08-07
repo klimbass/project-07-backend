@@ -1,0 +1,39 @@
+
+tags:
+  - Water
+summary: Get list of drinks
+operationId: getMonthWater
+description: 'Get list of customer drinks for particular month with this endpoint'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: date
+    schema:
+      type: string
+      description: "Only existing dates as format YYYY:MM between 2020 and 2099 are acceptable "
+      example: '2024-08'
+responses:
+  '200':
+    description: Return array with drinks for a month 
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found drinks!
+            data:
+              type: object
+              $ref: '..\..\..\components\schemas\waterForMonth.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+

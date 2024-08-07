@@ -2,8 +2,6 @@ import { Router } from 'express';
 import { authenticate } from '../middlewares/authenticate.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import isValidId from '../middlewares/isValidId.js';
-import  parseDayParams  from '../utils/day.js';
-import parseMonthParams from '../utils/month.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   createCardSchema,
@@ -16,7 +14,8 @@ import {
   createCardController,
   patchCardController,
   deleteCardController,
-  getMonthWaterController
+  getMonthWaterController,
+  getDayhWaterController
 } from '../controllers/water.js';
 
 
@@ -43,14 +42,12 @@ waterRouter.delete('/:cardId', isValidId, ctrlWrapper(deleteCardController));
 waterRouter.get(
   '/day',
   validateBody(searchByDayCardSchema),
-  parseDayParams,
-  ctrlWrapper(getMonthWaterController));
+  ctrlWrapper(getDayhWaterController));
 
 //  приватний ендпоінт для отримання даних щодо спожитої користувачем води за місяць
 waterRouter.get(
   '/month',
   validateBody(searchByMonthCardSchema),
-  parseMonthParams,
   ctrlWrapper(getMonthWaterController));
 
 export default waterRouter;
