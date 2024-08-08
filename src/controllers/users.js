@@ -205,6 +205,7 @@ const updatedResult = await updateCurrentUser(userId, {...data, avatar: photoUrl
     delete userWithoutTimestamps.createdAt;
     delete userWithoutTimestamps.updatedAt;
 
+
 res.json({
     status: 200,
     message: 'User information successfully updated!',

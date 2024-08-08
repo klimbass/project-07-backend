@@ -224,7 +224,7 @@ export const updateCurrentUser = async (userId, data, options = {}) => {
   if (!result || !result.value) return null;
 
   return {
-    contact: result.value,
+    user: result.value,
     isNew: Boolean(result?.lastErrorObject?.upserted),
   };
 };
