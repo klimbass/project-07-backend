@@ -21,7 +21,7 @@ export const updateCardSchema = Joi.object({
     'number.max': 'Amount should be at most 5000 ml',
   }),
   date: Joi.string().pattern(DATE_AND_TIME_REGEX).messages({
-    'string.pattern': 'Date and time should exist in a year range 2020 to 2099 and match format YYYY-MM-DD HH:MM For example 2024-02-29 07:54',
+    'string.pattern.base': 'Date and time should exist in a year range 2020 to 2099 and match format YYYY-MM-DD HH:MM For example 2024-02-29 07:54',
   }),
 })
   .min(1)

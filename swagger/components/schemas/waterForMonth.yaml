@@ -1,17 +1,18 @@
 type: object
 required:
-  - items
-  - totalitems
-  - waterAmount
+- items
+- waterAmount
+- total
 properties:
   items:
+   type: array
+   items: 
     $ref: './water.yaml'
   waterAmount:
-    description: 'Data about user consumption'
-    type: array
-    $ref: ./waterAmount.yaml
-  totalitems:
-      description: 'Total entries for a given month'
-      type: number
-      example: 21
-  
+    type: array  
+    items:
+     $ref: ./waterAmount.yaml
+  total:
+   type: number
+   example: 21 
+   description: 'Total entries for a given month'

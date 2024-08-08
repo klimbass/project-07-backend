@@ -294,8 +294,7 @@
                       "example": "Drinks found!"
                     },
                     "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/water"
+                      "$ref": "#/components/schemas/waterForMonth"
                     }
                   }
                 }
@@ -1348,6 +1347,7 @@
       },
       "waterAmount": {
         "type": "object",
+        "description": "Data about user consumption",
         "required": [
           "statusdayAmount",
           "totalForDay",
@@ -1375,22 +1375,26 @@
         "type": "object",
         "required": [
           "items",
-          "totalitems",
-          "waterAmount"
+          "waterAmount",
+          "total"
         ],
         "properties": {
           "items": {
-            "$ref": "#/components/schemas/water"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/water"
+            }
           },
           "waterAmount": {
-            "description": "Data about user consumption",
             "type": "array",
-            "$ref": "#/components/schemas/waterAmount"
+            "items": {
+              "$ref": "#/components/schemas/waterAmount"
+            }
           },
-          "totalitems": {
-            "description": "Total entries for a given month",
+          "total": {
             "type": "number",
-            "example": 21
+            "example": 21,
+            "description": "Total entries for a given month"
           }
         }
       },
