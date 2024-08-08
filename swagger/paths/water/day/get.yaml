@@ -31,6 +31,6 @@ responses:
               type: string
               example: Drinks found!
             data:
-              $ref: ..\..\..\components\schemas\waterForMonth.yaml
+              $ref: ../../../components/schemas/waterForMonth.yaml
   '401':
     $ref: '../../../components/responses/401.yaml'

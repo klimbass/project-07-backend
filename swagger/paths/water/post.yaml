@@ -33,6 +33,7 @@ responses:
             - status
             - message
             - data
+            - actualDayWater
           properties:
             status:
               type: integer
@@ -43,6 +44,9 @@ responses:
             data:
               type: object
               $ref: '../../components/schemas/water.yaml'
+            actualDayWater:
+              type: integer
+              example: 1350
   '400':
     $ref: '../../components/responses/400.yaml'
   '401':
