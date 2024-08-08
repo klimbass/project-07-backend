@@ -77,7 +77,8 @@
                   "required": [
                     "status",
                     "message",
-                    "data"
+                    "data",
+                    "actualDayWater"
                   ],
                   "properties": {
                     "status": {
@@ -91,6 +92,10 @@
                     "data": {
                       "type": "object",
                       "$ref": "#/components/schemas/water"
+                    },
+                    "actualDayWater": {
+                      "type": "integer",
+                      "example": 1350
                     }
                   }
                 }
@@ -181,7 +186,8 @@
                   "required": [
                     "status",
                     "message",
-                    "data"
+                    "data",
+                    "actualDayWater"
                   ],
                   "properties": {
                     "status": {
@@ -195,6 +201,10 @@
                     "data": {
                       "type": "object",
                       "$ref": "#/components/schemas/water"
+                    },
+                    "actualDayWater": {
+                      "type": "integer",
+                      "example": 1350
                     }
                   }
                 }
@@ -234,7 +244,33 @@
         ],
         "responses": {
           "204": {
-            "description": "No content"
+            "description": "Successfully deleted a card!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "actualDayWater"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully patched a card!"
+                    },
+                    "actualDayWater": {
+                      "type": "integer",
+                      "example": 1350
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/401"

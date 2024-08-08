@@ -14,7 +14,25 @@ parameters:
       example: '66ad21159acfa4bd9e5cfd1f'
 responses:
   '204':
-    description: 'No content'
+    description: Successfully deleted a card!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - actualDayWater
+          properties:
+            status:
+              type: integer
+              example: 204
+            message:
+              type: string
+              example: Successfully patched a card!
+            actualDayWater:
+              type: integer
+              example: 1350
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':
