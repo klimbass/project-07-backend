@@ -36,10 +36,15 @@ export const getTotalUsersController = async (req, res) => {
   }
 };
 
+
+
 export const registerUserController = async (req, res) => {
-  const { user, accessToken, refreshToken, sessionId } = await registerUser(
-    req.body,
-  );
+  const { user, accessToken, refreshToken, sessionId } = await registerUser(req.body);
+
+  // Видалення полів createdAt та updatedAt з користувача
+  const userWithoutTimestamps = user.toObject();
+  delete userWithoutTimestamps.createdAt;
+  delete userWithoutTimestamps.updatedAt;
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
@@ -54,15 +59,19 @@ export const registerUserController = async (req, res) => {
     status: 201,
     message: 'Successfully registered and logged in a user!',
     data: {
-      user,
+      user: userWithoutTimestamps,
       accessToken,
     },
   });
 };
 
-
 export const loginUserController = async (req, res) => {
   const { user, session } = await loginUser(req.body);
+
+  // Видалення полів createdAt та updatedAt з користувача
+  const userWithoutTimestamps = user.toObject();
+  delete userWithoutTimestamps.createdAt;
+  delete userWithoutTimestamps.updatedAt;
 
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
@@ -77,7 +86,7 @@ export const loginUserController = async (req, res) => {
     status: 200,
     message: 'Successfully logged in a user!',
     data: {
-      user,
+      user: userWithoutTimestamps,
       accessToken: session.accessToken,
     },
   });
@@ -137,13 +146,18 @@ export const loginWithGoogleController = async (req, res) => {
 
   const { user, session } = await loginOrSignupWithGoogle(req.body.code);
 
+  // Видалення полів createdAt та updatedAt з користувача
+  const userWithoutTimestamps = user.toObject();
+  delete userWithoutTimestamps.createdAt;
+  delete userWithoutTimestamps.updatedAt;
+
   setupSession(res, session);
 
   res.json({
     status: 200,
     message: 'Successfully logged in or signed up with Google!',
     data: {
-      user,
+      user: userWithoutTimestamps,
       accessToken: session.accessToken,
     },
   });
@@ -152,11 +166,15 @@ export const loginWithGoogleController = async (req, res) => {
 export const getCurrentUserController = async (req, res, next) => {
   try {
     const user = req.user;
+    // Видалення полів createdAt та updatedAt з користувача
+   const userWithoutTimestamps = user.toObject();
+   delete userWithoutTimestamps.createdAt;
+   delete userWithoutTimestamps.updatedAt;
 
     res.json({
     status: 200,
     message: 'Successfully retrieved current user information.',
-    data: user,
+    data: { user: userWithoutTimestamps },
   });
 } catch (err) {
   next (err);
@@ -180,12 +198,17 @@ const updatedResult = await updateCurrentUser(userId, {...data, avatar: photoUrl
 
   if (!updatedResult) {
     return next(createHttpError(404, 'User not found'));
-}
+  }
+
+   // Видалення полів createdAt та updatedAt з оновленого користувача
+    const userWithoutTimestamps = updatedResult.toObject();
+    delete userWithoutTimestamps.createdAt;
+    delete userWithoutTimestamps.updatedAt;
 
 res.json({
     status: 200,
     message: 'User information successfully updated!',
-    data: updatedResult,
+    data: { updatedResult: userWithoutTimestamps },
 });
 };
 
