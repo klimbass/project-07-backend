@@ -182,6 +182,7 @@ const updatedResult = await updateCurrentUser(userId, {...data, avatar: photoUrl
     return next(createHttpError(404, 'User not found'));
 }
 
+
 res.json({
     status: 200,
     message: 'User information successfully updated!',
