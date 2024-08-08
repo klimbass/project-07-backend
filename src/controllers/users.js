@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
 import { SEVEN_DAY } from '../constants/index.js';
 import { env } from '../utils/env.js';
-import {saveFileToCloudinary} from '../utils/saveFileToCloudinary.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import { generateAuthUrl } from '../utils/googleOAuth2.js';
 import {
@@ -13,9 +13,8 @@ import {
   requestResetToken,
   resetPassword,
   updateCurrentUser,
-  loginOrSignupWithGoogle
+  loginOrSignupWithGoogle,
 } from '../services/users.js';
-
 
 export const getTotalUsersController = async (req, res) => {
   try {
@@ -36,10 +35,10 @@ export const getTotalUsersController = async (req, res) => {
   }
 };
 
-
-
 export const registerUserController = async (req, res) => {
-  const { user, accessToken, refreshToken, sessionId } = await registerUser(req.body);
+  const { user, accessToken, refreshToken, sessionId } = await registerUser(
+    req.body,
+  );
 
   // Видалення полів createdAt та updatedAt з користувача
   const userWithoutTimestamps = user.toObject();
@@ -141,9 +140,7 @@ export const getGoogleOAuthUrlController = async (req, res) => {
   });
 };
 
-
 export const loginWithGoogleController = async (req, res) => {
-
   const { user, session } = await loginOrSignupWithGoogle(req.body.code);
 
   // Видалення полів createdAt та updatedAt з користувача
@@ -167,18 +164,18 @@ export const getCurrentUserController = async (req, res, next) => {
   try {
     const user = req.user;
     // Видалення полів createdAt та updatedAt з користувача
-   const userWithoutTimestamps = user.toObject();
-   delete userWithoutTimestamps.createdAt;
-   delete userWithoutTimestamps.updatedAt;
+    const userWithoutTimestamps = user.toObject();
+    delete userWithoutTimestamps.createdAt;
+    delete userWithoutTimestamps.updatedAt;
 
     res.json({
-    status: 200,
-    message: 'Successfully retrieved current user information.',
-    data: { user: userWithoutTimestamps },
-  });
-} catch (err) {
-  next (err);
-}
+      status: 200,
+      message: 'Successfully retrieved current user information.',
+      data: { user: userWithoutTimestamps },
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 export const updateCurrentUserController = async (req, res, next) => {
@@ -186,31 +183,33 @@ export const updateCurrentUserController = async (req, res, next) => {
   const data = req.body;
   let photoUrl;
 
-  if(req.file) {
-    if (env('ENABLE_CLOUDINARY')==='true') {
+  if (req.file) {
+    if (env('ENABLE_CLOUDINARY') === 'true') {
       photoUrl = await saveFileToCloudinary(req.file, 'users');
-  } else {
+    } else {
       photoUrl = await saveFileToUploadDir(req.file, 'users');
+    }
   }
-}
 
-const updatedResult = await updateCurrentUser(userId, {...data, avatar: photoUrl});
+  const updatedResult = await updateCurrentUser(userId, {
+    ...data,
+    avatar: photoUrl,
+  });
 
   if (!updatedResult) {
     return next(createHttpError(404, 'User not found'));
   }
 
-   // Видалення полів createdAt та updatedAt з оновленого користувача
-    const userWithoutTimestamps = updatedResult.toObject();
-    delete userWithoutTimestamps.createdAt;
-    delete userWithoutTimestamps.updatedAt;
+  // Видалення полів createdAt та updatedAt з оновленого користувача
+  const userWithoutTimestamps = updatedResult.user.toObject();
+  delete userWithoutTimestamps.createdAt;
+  delete userWithoutTimestamps.updatedAt;
 
-
-res.json({
+  res.json({
     status: 200,
     message: 'User information successfully updated!',
     data: { updatedResult: userWithoutTimestamps },
-});
+  });
 };
 
 export const requestResetEmailController = async (req, res) => {
