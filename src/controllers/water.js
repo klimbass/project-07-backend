@@ -99,8 +99,8 @@ export const deleteCardController = async (req, res) => {
   }
   const actualDayWater = await actualAmountDayWater(req.user._id);
 
-  res.status(204).json({
-    status: 204,
+  res.status(200).json({
+    status: 200,
     message: 'Successfully deleted a card!',
     actualDayWater,
   });

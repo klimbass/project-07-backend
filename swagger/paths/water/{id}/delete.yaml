@@ -13,7 +13,7 @@ parameters:
       type: string
       example: '66ad21159acfa4bd9e5cfd1f'
 responses:
-  '204':
+  '200':
     description: Successfully deleted a card!
     content:
       application/json:
@@ -26,7 +26,7 @@ responses:
           properties:
             status:
               type: integer
-              example: 204
+              example: 200
             message:
               type: string
               example: Successfully patched a card!
