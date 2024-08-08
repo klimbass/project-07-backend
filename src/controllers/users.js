@@ -200,16 +200,14 @@ const updatedResult = await updateCurrentUser(userId, {...data, avatar: photoUrl
     return next(createHttpError(404, 'User not found'));
   }
 
-   // Видалення полів createdAt та updatedAt з оновленого користувача
-    const userWithoutTimestamps = updatedResult.toObject();
-    delete userWithoutTimestamps.createdAt;
-    delete userWithoutTimestamps.updatedAt;
-
 
 res.json({
     status: 200,
     message: 'User information successfully updated!',
-    data: { updatedResult: userWithoutTimestamps },
+    data: {
+    updatedResult,
+
+  },
 });
 };
 
