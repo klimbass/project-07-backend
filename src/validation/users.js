@@ -43,5 +43,5 @@ export const updateUserSchema = Joi.object({
   dailyWaterNorm: Joi.number().min(0).messages({
     'number.min': 'Daily water norm cannot be a negative number',
   }),
-  avatar: Joi.string(),
+  avatar: Joi.binary(),
 });
