@@ -44,6 +44,8 @@ export const registerUserController = async (req, res) => {
   const userWithoutTimestamps = user.toObject();
   delete userWithoutTimestamps.createdAt;
   delete userWithoutTimestamps.updatedAt;
+  delete userWithoutTimestamps.password;
+
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
@@ -71,6 +73,7 @@ export const loginUserController = async (req, res) => {
   const userWithoutTimestamps = user.toObject();
   delete userWithoutTimestamps.createdAt;
   delete userWithoutTimestamps.updatedAt;
+  delete userWithoutTimestamps.password;
 
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
@@ -147,6 +150,7 @@ export const loginWithGoogleController = async (req, res) => {
   const userWithoutTimestamps = user.toObject();
   delete userWithoutTimestamps.createdAt;
   delete userWithoutTimestamps.updatedAt;
+  delete userWithoutTimestamps.password;
 
   setupSession(res, session);
 
@@ -167,6 +171,7 @@ export const getCurrentUserController = async (req, res, next) => {
     const userWithoutTimestamps = user.toObject();
     delete userWithoutTimestamps.createdAt;
     delete userWithoutTimestamps.updatedAt;
+    delete userWithoutTimestamps.password;
 
     res.json({
       status: 200,
@@ -204,6 +209,7 @@ export const updateCurrentUserController = async (req, res, next) => {
   const userWithoutTimestamps = updatedResult.user.toObject();
   delete userWithoutTimestamps.createdAt;
   delete userWithoutTimestamps.updatedAt;
+  delete userWithoutTimestamps.password;
 
   res.json({
     status: 200,
