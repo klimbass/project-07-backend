@@ -15,21 +15,21 @@ export const setupServer = () => {
   const app = express();
 
   app.use(express.json());
-  // app.use(
-  //   cors({
-  //     origin: [env('APP_DOMAIN'), env('DEV_APP_DOMAIN')],
-  //     credentials: true,
-  //   }),
-  // );
-
   app.use(
     cors({
-      origin: '*',
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-      allowedHeaders: 'Content-Type, Authorization, X-Requested-With',
+      origin: [env('APP_DOMAIN_FRONT'), env('DEV_APP_DOMAIN')],
       credentials: true,
     }),
   );
+
+  // app.use(
+  //   cors({
+  //     origin: '*',
+  //     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  //     allowedHeaders: 'Content-Type, Authorization, X-Requested-With',
+  //     credentials: true,
+  //   }),
+  // );
 
   app.use(cookieParser());
 

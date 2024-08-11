@@ -15,5 +15,10 @@ export const actualAmountDayWater = async (userId) => {
   );
 
   const dayWaterValue = await WaterCollection.aggregate(pipeline);
-  return dayWaterValue[0].total_value;
+  let value = 0;
+  if (dayWaterValue.length > 0) {
+    value = dayWaterValue[0].total_value;
+  }
+
+  return value;
 };
