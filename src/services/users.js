@@ -35,7 +35,7 @@ export const registerUser = async (payload) => {
   const accessToken = randomBytes(30).toString('base64');
   const refreshToken = randomBytes(30).toString('base64');
 
-  await SessionsCollection.create({
+  const session = await SessionsCollection.create({
     userId: newUser._id,
     accessToken,
     refreshToken,
@@ -47,10 +47,9 @@ export const registerUser = async (payload) => {
     user: newUser,
     accessToken,
     refreshToken,
+    sessionId: session._id,
   };
 };
-
-
 
 export const loginUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
@@ -121,7 +120,6 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
     ...newSession,
   });
 };
-
 
 export const loginOrSignupWithGoogle = async (code) => {
   const loginTicket = await validateCode(code);
