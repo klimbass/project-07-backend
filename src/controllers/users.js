@@ -46,14 +46,17 @@ export const registerUserController = async (req, res) => {
   delete userWithoutTimestamps.updatedAt;
   delete userWithoutTimestamps.password;
 
-
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + SEVEN_DAY),
+    sameSite: 'none',
+    secure: true,
   });
   res.cookie('sessionId', sessionId, {
     httpOnly: true,
     expires: new Date(Date.now() + SEVEN_DAY),
+    sameSite: 'none',
+    secure: true,
   });
 
   res.json({
@@ -78,10 +81,14 @@ export const loginUserController = async (req, res) => {
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + SEVEN_DAY),
+    sameSite: 'none',
+    secure: true,
   });
   res.cookie('sessionId', session._id, {
     httpOnly: true,
     expires: new Date(Date.now() + SEVEN_DAY),
+    sameSite: 'none',
+    secure: true,
   });
 
   res.json({
