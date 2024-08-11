@@ -61,6 +61,7 @@ usersRouter.patch(
   validateBody(updateUserSchema),
   ctrlWrapper(updateCurrentUserController));
 
+  
 //створення посилання для гугл аутентифікації
 usersRouter.get(
   '/get-oauth-url',
