@@ -55,9 +55,9 @@ paths:
   /users/refresh:
     post:
       $ref: ../swagger/paths/users/post/refresh.yaml
-  /users/confirm-oauth:
+  /users/confirm-google-auth:
     post:
-      $ref: ../swagger/paths/users/post/confirm-oauth.yaml
+      $ref: ../swagger/paths/users/post/confirm-google-auth.yaml
   /users/request-reset-email:
     post:
       $ref: ../swagger/paths/users/post/request-reset-email.yaml

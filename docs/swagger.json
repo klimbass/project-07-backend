@@ -980,7 +980,7 @@
         }
       }
     },
-    "/users/confirm-oauth": {
+    "/users/confirm-google-auth": {
       "post": {
         "tags": [
           "User"
