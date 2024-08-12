@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { SEVEN_DAY } from '../constants/index.js';
+// import { SEVEN_DAY } from '../constants/index.js';
 import { env } from '../utils/env.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
@@ -15,6 +15,23 @@ import {
   updateCurrentUser,
   loginOrSignupWithGoogle,
 } from '../services/users.js';
+import { filterResUser } from '../utils/filterResUser.js';
+import { setupSession } from '../utils/createSession.js';
+
+// const setupSession = (res, sessionId, refreshToken) => {
+//   res.cookie('refreshToken', refreshToken, {
+//     httpOnly: true,
+//     expires: new Date(Date.now() + SEVEN_DAY),
+//     sameSite: 'none',
+//     secure: true,
+//   });
+//   res.cookie('sessionId', sessionId, {
+//     httpOnly: true,
+//     expires: new Date(Date.now() + SEVEN_DAY),
+//     sameSite: 'none',
+//     secure: true,
+//   });
+// };
 
 export const getTotalUsersController = async (req, res) => {
   try {
@@ -41,23 +58,9 @@ export const registerUserController = async (req, res) => {
   );
 
   // Видалення полів createdAt та updatedAt з користувача
-  const userWithoutTimestamps = user.toObject();
-  delete userWithoutTimestamps.createdAt;
-  delete userWithoutTimestamps.updatedAt;
-  delete userWithoutTimestamps.password;
+  const userWithoutTimestamps = filterResUser(user);
 
-  res.cookie('refreshToken', refreshToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + SEVEN_DAY),
-    sameSite: 'none',
-    secure: true,
-  });
-  res.cookie('sessionId', sessionId, {
-    httpOnly: true,
-    expires: new Date(Date.now() + SEVEN_DAY),
-    sameSite: 'none',
-    secure: true,
-  });
+  setupSession(res, sessionId, refreshToken);
 
   res.json({
     status: 201,
@@ -73,23 +76,9 @@ export const loginUserController = async (req, res) => {
   const { user, session } = await loginUser(req.body);
 
   // Видалення полів createdAt та updatedAt з користувача
-  const userWithoutTimestamps = user.toObject();
-  delete userWithoutTimestamps.createdAt;
-  delete userWithoutTimestamps.updatedAt;
-  delete userWithoutTimestamps.password;
+  const userWithoutTimestamps = filterResUser(user);
 
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + SEVEN_DAY),
-    sameSite: 'none',
-    secure: true,
-  });
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expires: new Date(Date.now() + SEVEN_DAY),
-    sameSite: 'none',
-    secure: true,
-  });
+  setupSession(res, session._id, session.refreshToken);
 
   res.json({
     status: 200,
@@ -106,20 +95,18 @@ export const logoutUserController = async (req, res) => {
     await logoutUser(req.cookies.sessionId);
   }
 
-  res.clearCookie('sessionId');
-  res.clearCookie('refreshToken');
+  res.clearCookie('sessionId', {
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+  });
+  res.clearCookie('refreshToken', {
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+  });
 
   res.status(204).send();
-};
-const setupSession = (res, session) => {
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + SEVEN_DAY),
-  });
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expires: new Date(Date.now() + SEVEN_DAY),
-  });
 };
 
 export const refreshUserSessionController = async (req, res) => {
@@ -128,7 +115,7 @@ export const refreshUserSessionController = async (req, res) => {
     refreshToken: req.cookies.refreshToken,
   });
 
-  setupSession(res, session);
+  setupSession(res, session._id, session.refreshToken);
 
   res.json({
     status: 200,
@@ -154,12 +141,9 @@ export const loginWithGoogleController = async (req, res) => {
   const { user, session } = await loginOrSignupWithGoogle(req.body.code);
 
   // Видалення полів createdAt та updatedAt з користувача
-  const userWithoutTimestamps = user.toObject();
-  delete userWithoutTimestamps.createdAt;
-  delete userWithoutTimestamps.updatedAt;
-  delete userWithoutTimestamps.password;
+  const userWithoutTimestamps = filterResUser(user);
 
-  setupSession(res, session);
+  setupSession(res, session._id, session.refreshToken);
 
   res.json({
     status: 200,
@@ -175,10 +159,7 @@ export const getCurrentUserController = async (req, res, next) => {
   try {
     const user = req.user;
     // Видалення полів createdAt та updatedAt з користувача
-    const userWithoutTimestamps = user.toObject();
-    delete userWithoutTimestamps.createdAt;
-    delete userWithoutTimestamps.updatedAt;
-    delete userWithoutTimestamps.password;
+    const userWithoutTimestamps = filterResUser(user);
 
     res.json({
       status: 200,
@@ -213,10 +194,7 @@ export const updateCurrentUserController = async (req, res, next) => {
   }
 
   // Видалення полів createdAt та updatedAt з оновленого користувача
-  const userWithoutTimestamps = updatedResult.user.toObject();
-  delete userWithoutTimestamps.createdAt;
-  delete userWithoutTimestamps.updatedAt;
-  delete userWithoutTimestamps.password;
+  const userWithoutTimestamps = filterResUser(updatedResult.user);
 
   res.json({
     status: 200,

@@ -12,3 +12,18 @@ export const createSession = () => {
     refreshTokenValidUntil: new Date(Date.now() + SEVEN_DAY),
   };
 };
+
+export const setupSession = (res, sessionId, refreshToken) => {
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    expires: new Date(Date.now() + SEVEN_DAY),
+    sameSite: 'none',
+    secure: true,
+  });
+  res.cookie('sessionId', sessionId, {
+    httpOnly: true,
+    expires: new Date(Date.now() + SEVEN_DAY),
+    sameSite: 'none',
+    secure: true,
+  });
+};
