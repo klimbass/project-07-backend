@@ -1,15 +1,15 @@
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import {authenticate} from '../middlewares/authenticate.js';
-import {upload} from '../middlewares/multer.js';
+import { authenticate } from '../middlewares/authenticate.js';
+import { upload } from '../middlewares/multer.js';
 import {
   registerUserSchema,
   loginUserSchema,
-  loginWithGoogleOAuthSchema,
+  // loginWithGoogleOAuthSchema,
   requestResetEmailSchema,
   resetPasswordSchema,
-  updateUserSchema
+  updateUserSchema,
 } from '../validation/users.js';
 import {
   getTotalUsersController,
@@ -20,14 +20,13 @@ import {
   refreshUserSessionController,
   loginWithGoogleController,
   requestResetEmailController,
-  resetPasswordController,getCurrentUserController, updateCurrentUserController
+  resetPasswordController,
+  getCurrentUserController,
+  updateCurrentUserController,
 } from '../controllers/users.js';
 
-
 const usersRouter = Router();
-usersRouter.get(
-  '/total',
-  ctrlWrapper(getTotalUsersController));
+usersRouter.get('/total', ctrlWrapper(getTotalUsersController));
 
 usersRouter.post(
   '/register',
@@ -41,36 +40,31 @@ usersRouter.post(
   ctrlWrapper(loginUserController),
 );
 
-usersRouter.post(
-  '/logout',
-  ctrlWrapper(logoutUserController));
+usersRouter.post('/logout', ctrlWrapper(logoutUserController));
 
-usersRouter.post(
-  '/refresh',
-  ctrlWrapper(refreshUserSessionController));
+usersRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
 usersRouter.get(
   '/current',
   authenticate,
-  ctrlWrapper(getCurrentUserController));
+  ctrlWrapper(getCurrentUserController),
+);
 
 usersRouter.patch(
   '/update',
   authenticate,
   upload.single('avatar'),
   validateBody(updateUserSchema),
-  ctrlWrapper(updateCurrentUserController));
-
+  ctrlWrapper(updateCurrentUserController),
+);
 
 //створення посилання для гугл аутентифікації
-usersRouter.get(
-  '/get-oauth-url',
-  ctrlWrapper(getGoogleOAuthUrlController));
+usersRouter.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
 
 //Створення логіну
-usersRouter.post(
- '/confirm-google-auth',
-  validateBody(loginWithGoogleOAuthSchema),
+usersRouter.get(
+  '/confirm-google-auth',
+  // validateBody(loginWithGoogleOAuthSchema),
   ctrlWrapper(loginWithGoogleController),
 );
 
