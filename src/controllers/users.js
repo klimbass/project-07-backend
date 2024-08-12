@@ -138,7 +138,8 @@ export const getGoogleOAuthUrlController = async (req, res) => {
 };
 
 export const loginWithGoogleController = async (req, res) => {
-  const { user, session } = await loginOrSignupWithGoogle(req.body.code);
+  const code = req.query.code;
+  const { user, session } = await loginOrSignupWithGoogle(code);
 
   // Видалення полів createdAt та updatedAt з користувача
   const userWithoutTimestamps = filterResUser(user);
