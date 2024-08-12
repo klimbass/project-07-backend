@@ -16,7 +16,7 @@ import { SMTP } from '../constants/index.js';
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { createSession } from '../utils/createSession';
+import { createSession } from '../utils/createSession.js';
 
 export const getTotalUsers = async () => {
   return await UsersCollection.countDocuments();
