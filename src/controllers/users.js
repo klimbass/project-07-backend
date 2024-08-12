@@ -50,11 +50,13 @@ export const registerUserController = async (req, res) => {
     httpOnly: true,
     expires: new Date(Date.now() + SEVEN_DAY),
     sameSite: 'none',
+    secure: true,
   });
   res.cookie('sessionId', sessionId, {
     httpOnly: true,
     expires: new Date(Date.now() + SEVEN_DAY),
     sameSite: 'none',
+    secure: true,
   });
 
   res.json({
@@ -80,11 +82,13 @@ export const loginUserController = async (req, res) => {
     httpOnly: true,
     expires: new Date(Date.now() + SEVEN_DAY),
     sameSite: 'none',
+    secure: true,
   });
   res.cookie('sessionId', session._id, {
     httpOnly: true,
     expires: new Date(Date.now() + SEVEN_DAY),
     sameSite: 'none',
+    secure: true,
   });
 
   res.json({

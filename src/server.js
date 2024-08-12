@@ -22,7 +22,24 @@ export const setupServer = () => {
   //   }),
   // );
 
-  app.use(cors());
+  app.use(
+    cors({
+      origin: (origin, callback) => {
+        const allowedOrigins = [
+          'http://localhost:5173',
+          'https://full-stack-fusion.vercel.app',
+          'https://aquatrackerapp.onrender.com',
+          'http://localhost:3000',
+        ];
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      credentials: true,
+    }),
+  );
   // app.use(
   //   cors({
   //     origin: '*',

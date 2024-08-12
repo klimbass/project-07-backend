@@ -3,7 +3,7 @@ import { randomBytes } from 'crypto';
 import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/user.js';
 
-import { FORTY_MINUTES, SEVEN_DAY, TEMPLATES_DIR } from '../constants/index.js';
+import { TEMPLATES_DIR } from '../constants/index.js';
 import { SessionsCollection } from '../db/models/session.js';
 import {
   getFullNameFromGoogleTokenPayload,
@@ -16,6 +16,7 @@ import { SMTP } from '../constants/index.js';
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
+import { createSession } from '../utils/createSession';
 
 export const getTotalUsers = async () => {
   return await UsersCollection.countDocuments();
@@ -31,22 +32,17 @@ export const registerUser = async (payload) => {
     password: encryptedPassword,
   });
 
-  // Створення сесії після реєстрації
-  const accessToken = randomBytes(30).toString('base64');
-  const refreshToken = randomBytes(30).toString('base64');
+  const newSession = createSession();
 
   const session = await SessionsCollection.create({
     userId: newUser._id,
-    accessToken,
-    refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FORTY_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + SEVEN_DAY),
+    ...newSession,
   });
 
   return {
     user: newUser,
-    accessToken,
-    refreshToken,
+    accessToken: session.accessToken,
+    refreshToken: session.refreshToken,
     sessionId: session._id,
   };
 };
@@ -64,15 +60,11 @@ export const loginUser = async (payload) => {
 
   await SessionsCollection.deleteOne({ userId: user._id });
 
-  const accessToken = randomBytes(30).toString('base64');
-  const refreshToken = randomBytes(30).toString('base64');
+  const newSession = createSession();
 
   const session = await SessionsCollection.create({
     userId: user._id,
-    accessToken,
-    refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FORTY_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + SEVEN_DAY),
+    ...newSession,
   });
 
   return { user, session };
@@ -80,18 +72,6 @@ export const loginUser = async (payload) => {
 
 export const logoutUser = async (sessionId) => {
   await SessionsCollection.deleteOne({ _id: sessionId });
-};
-
-const createSession = () => {
-  const accessToken = randomBytes(30).toString('base64');
-  const refreshToken = randomBytes(30).toString('base64');
-
-  return {
-    accessToken,
-    refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FORTY_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + SEVEN_DAY),
-  };
 };
 
 export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
