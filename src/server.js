@@ -8,6 +8,7 @@ import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 import { UPLOAD_DIR } from './constants/index.js';
+import session from 'express-session';
 
 const PORT = Number(env('PORT', 3000));
 
@@ -42,9 +43,7 @@ export const setupServer = () => {
   );
   // app.use(
   //   cors({
-  //     origin: '*',
-  //     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  //     allowedHeaders: 'Content-Type, Authorization, X-Requested-With',
+  //     origin: ['http://127.0.0.1:5501'],
   //     credentials: true,
   //   }),
   // );
@@ -58,6 +57,16 @@ export const setupServer = () => {
       },
     }),
   );
+
+  app.use(
+    session({
+      secret: 'your-secret-key',
+      resave: false,
+      saveUninitialized: true,
+      cookie: { secure: true },
+    }),
+  );
+
   app.get('/', (req, res) => {
     res.send('Welcome to the homepage');
   });
