@@ -6,8 +6,11 @@ export const MONGO_DB = {
   MONGODB_DB: 'MONGODB_DB',
 };
 
-export const FORTY_MINUTES = 40 * 60 * 1000;
-export const SEVEN_DAY = 7 * 24 * 60 * 60 * 1000;
+// export const FORTY_MINUTES = 40 * 60 * 1000;
+export const FORTY_MINUTES = 3 * 60 * 1000;
+
+// export const SEVEN_DAY = 7 * 24 * 60 * 60 * 1000;
+export const SEVEN_DAY = 3 * 60 * 1000;
 
 export const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -33,6 +36,6 @@ export const DATE_AND_TIME_REGEX =
 export const MONTH_REGEX = /^(?:20[2-9][0-9])-(?:(?:0[1-9]|1[0-2]))$/;
 
 export const SORT_BY = ['date', '_id'];
-export const SORT_ORDER_ARRAY = [ 1, -1];
+export const SORT_ORDER_ARRAY = [1, -1];
 
-export const PARSE_DATE_PARAMS = [8,10];
+export const PARSE_DATE_PARAMS = [8, 10];
