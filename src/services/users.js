@@ -104,7 +104,11 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
 export const loginOrSignupWithGoogle = async (code) => {
   const loginTicket = await validateCode(code);
   const payload = loginTicket.getPayload();
-  if (!payload) throw createHttpError(401);
+  if (!payload)
+    throw createHttpError(
+      401,
+      'Unauthorized. Invalid or missing authentication token.',
+    );
 
   let user = await UsersCollection.findOne({ email: payload.email });
   if (!user) {

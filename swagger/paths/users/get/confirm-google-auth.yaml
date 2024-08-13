@@ -1,0 +1,64 @@
+tags:
+  - User
+summary: Authenticate a user via Google
+operationId: loginOrSignupWithGoogle
+description: 'Authenticate a user via Google and return a token.'
+security: []
+parameters:
+  - in: query
+    name: code
+    required: true
+    schema:
+      type: string
+      example: '4/0AY0e-g6Wx2UC3sQYZUZPv9A3Nw7D3eD0F-XH2EfsL8KJ2VBFyBfP1zEIV6lz3y_9q'
+    description: Google authorization code
+responses:
+  '200':
+    description: 'User authenticated successfully'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - accessToken
+            - user
+          properties:
+            accessToken:
+              type: string
+              description: 'Access token for authenticated user'
+              example: 'YBDTZRgpgFARbz3TetV4ZNylDdgPGYj4dSM8Rbuy'
+            user:
+              $ref: '../../../components/schemas/user.yaml'
+
+  '401':
+    description: 'Unauthorized. Invalid or missing authentication token.'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Unauthorized. Invalid or missing authentication token.'
+  '404':
+    description: 'The Code is not allowed'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'The Code is not allowed'

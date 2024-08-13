@@ -2,7 +2,7 @@ tags:
   - User
 summary: Authenticate a user
 operationId: loginUser
-description: 'Authenticate a user and return a JWT token.'
+description: 'Authenticate a user and return a access token.'
 security: []
 requestBody:
   description: 'User login details.'
@@ -55,5 +55,3 @@ responses:
                   example: 'YBDTZRgpgFARbz3TetV4ZNylDdgPGYj4dSM8Rbuy'
   '404':
     $ref: '../../../components/responses/404.yaml'
-  '500':
-    $ref: '../../../components/responses/500.yaml'
