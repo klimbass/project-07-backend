@@ -28,10 +28,8 @@ responses:
                 - url
               properties:
                 url:
-                 type: string
-                 description: 'URL link for google authorization'
-                 example: 'https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&client_id=730286863518-q2sp0vlht0udk97qfj2aomij8ovrh3li.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Faquatrackerapp.onrender.com'
+                  type: string
+                  description: 'URL link for google authorization'
+                  example: 'https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&client_id=730286863518-q2sp0vlht0udk97qfj2aomij8ovrh3li.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Faquatrackerapp.onrender.com'
   '404':
     $ref: '../../../components/responses/404.yaml'
-  '500':
-    $ref: '../../../components/responses/500.yaml'

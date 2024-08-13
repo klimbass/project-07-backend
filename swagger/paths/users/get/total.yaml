@@ -25,13 +25,11 @@ responses:
             data:
               type: object
               required:
-                -  totalUsers
+                - totalUsers
               properties:
-               totalUsers:
-                 type: integer
-                 description: 'Number of registered users'
-                 example: 9
+                totalUsers:
+                  type: integer
+                  description: 'Number of registered users'
+                  example: 9
   '404':
     $ref: '../../../components/responses/404.yaml'
-  '500':
-    $ref: '../../../components/responses/500.yaml'

@@ -11,9 +11,6 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
-    },
-    {
       "url": "https://aquatrackerapp.onrender.com",
       "description": "Production server"
     }
@@ -110,9 +107,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -277,9 +271,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -453,9 +444,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -510,9 +498,103 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/users/confirm-google-auth": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Authenticate a user via Google",
+        "operationId": "loginOrSignupWithGoogle",
+        "description": "Authenticate a user via Google and return a token.",
+        "security": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "4/0AY0e-g6Wx2UC3sQYZUZPv9A3Nw7D3eD0F-XH2EfsL8KJ2VBFyBfP1zEIV6lz3y_9q"
+            },
+            "description": "Google authorization code"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User authenticated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "accessToken",
+                    "user"
+                  ],
+                  "properties": {
+                    "accessToken": {
+                      "type": "string",
+                      "description": "Access token for authenticated user",
+                      "example": "YBDTZRgpgFARbz3TetV4ZNylDdgPGYj4dSM8Rbuy"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
           },
-          "500": {
-            "$ref": "#/components/responses/500"
+          "401": {
+            "description": "Unauthorized. Invalid or missing authentication token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized. Invalid or missing authentication token."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The Code is not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The Code is not allowed"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -565,9 +647,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -673,9 +752,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -764,9 +840,6 @@
           },
           "409": {
             "$ref": "#/components/responses/409"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -778,7 +851,7 @@
         ],
         "summary": "Authenticate a user",
         "operationId": "loginUser",
-        "description": "Authenticate a user and return a JWT token.",
+        "description": "Authenticate a user and return a access token.",
         "security": [],
         "requestBody": {
           "description": "User login details.",
@@ -852,9 +925,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -866,7 +936,7 @@
         ],
         "summary": "Logout a user",
         "operationId": "logoutUser",
-        "description": "Logout the current user by invalidating the JWT token.",
+        "description": "Logout the current user by invalidating the access token.",
         "security": [
           {
             "bearerAuth": []
@@ -892,9 +962,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -973,128 +1040,6 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      }
-    },
-    "/users/confirm-google-auth": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "summary": "Authenticate a user via Google",
-        "operationId": "loginOrSignupWithGoogle",
-        "description": "Authenticate a user via Google and return a token.",
-        "security": [],
-        "requestBody": {
-          "description": "Google login details.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "code"
-                ],
-                "properties": {
-                  "code": {
-                    "description": "Google authorization code",
-                    "type": "string",
-                    "example": "4/0AY0e-g6Wx2UC3sQYZUZPv9A3Nw7D3eD0F-XH2EfsL8KJ2VBFyBfP1zEIV6lz3y_9q"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "User authenticated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully logged in or signed up with Google!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "user",
-                        "token"
-                      ],
-                      "properties": {
-                        "user": {
-                          "$ref": "#/components/schemas/user"
-                        },
-                        "accessToken": {
-                          "type": "string",
-                          "description": "Access token for authenticated user",
-                          "example": "YBDTZRgpgFARbz3TetV4ZNylDdgPGYj4dSM8Rbuy"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized. Invalid or missing authentication token.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 401
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Unauthorized. Invalid or missing authentication token."
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "message"
-                      ],
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Unauthorized. Invalid or missing authentication token."
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -1630,43 +1575,6 @@
                     "message": {
                       "type": "string",
                       "example": "Email in use"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "500": {
-        "description": "Internal server error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 500
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Internal server error"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Internal server error"
                     }
                   }
                 }

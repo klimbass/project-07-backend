@@ -13,7 +13,6 @@ tags:
     description: Operations related to managing users profiles.
 servers:
   # update server url when we go live
-  - url: http://localhost:3000
   - url: https://aquatrackerapp.onrender.com
     description: Production server
 paths:
@@ -37,6 +36,9 @@ paths:
   /users/get-oauth-url:
     get:
       $ref: ../swagger/paths/users/get/get-oauth-url.yaml
+  /users/confirm-google-auth:
+    get:
+      $ref: ../swagger/paths/users/get/confirm-google-auth.yaml
   /users/current:
     get:
       $ref: ../swagger/paths/users/get/current.yaml
@@ -55,9 +57,6 @@ paths:
   /users/refresh:
     post:
       $ref: ../swagger/paths/users/post/refresh.yaml
-  /users/confirm-google-auth:
-    post:
-      $ref: ../swagger/paths/users/post/confirm-google-auth.yaml
   /users/request-reset-email:
     post:
       $ref: ../swagger/paths/users/post/request-reset-email.yaml

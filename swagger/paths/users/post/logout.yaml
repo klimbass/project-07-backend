@@ -2,7 +2,7 @@ tags:
   - User
 summary: Logout a user
 operationId: logoutUser
-description: 'Logout the current user by invalidating the JWT token.'
+description: 'Logout the current user by invalidating the access token.'
 security:
   - bearerAuth: []
 parameters:
@@ -19,5 +19,3 @@ responses:
     $ref: '../../../components/responses/401.yaml'
   '404':
     $ref: '../../../components/responses/404.yaml'
-  '500':
-    $ref: '../../../components/responses/500.yaml'
