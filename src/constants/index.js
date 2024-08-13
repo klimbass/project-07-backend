@@ -9,8 +9,7 @@ export const MONGO_DB = {
 // export const FORTY_MINUTES = 40 * 60 * 1000;
 export const FORTY_MINUTES = 3 * 60 * 1000;
 
-// export const SEVEN_DAY = 7 * 24 * 60 * 60 * 1000;
-export const SEVEN_DAY = 3 * 60 * 1000;
+export const SEVEN_DAY = 7 * 24 * 60 * 60 * 1000;
 
 export const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
