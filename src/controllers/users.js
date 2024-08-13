@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 // import { SEVEN_DAY } from '../constants/index.js';
+import jwt from 'jsonwebtoken';
 import { env } from '../utils/env.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
@@ -146,14 +147,31 @@ export const loginWithGoogleController = async (req, res) => {
 
   setupSession(res, session._id, session.refreshToken);
 
-  res.json({
-    status: 200,
-    message: 'Successfully logged in or signed up with Google!',
-    data: {
-      user: userWithoutTimestamps,
+  // res.json({
+  //   status: 200,
+  //   message: 'Successfully logged in or signed up with Google!',
+  //   data: {
+  //     user: userWithoutTimestamps,
+  //     accessToken: session.accessToken,
+  //   },
+  // });
+
+  const accessTokenJWT = jwt.sign(
+    {
       accessToken: session.accessToken,
+      sessionId: session._id,
+      refreshToken: session.refreshToken,
+      user: userWithoutTimestamps,
     },
-  });
+    env('JWT_SECRET_GOOGLE'),
+    {
+      expiresIn: '15m',
+    },
+  );
+
+  res.redirect(
+    `https://full-stack-fusion.vercel.app/tracker?accesstokenjwt=${accessTokenJWT}`,
+  );
 };
 
 export const getCurrentUserController = async (req, res, next) => {
