@@ -155,9 +155,11 @@ export const loginWithGoogleController = async (req, res) => {
     },
   );
 
-  res.redirect(
-    `https://full-stack-fusion.vercel.app?accesstokenjwt=${accessTokenJWT}`,
-  );
+  // res.redirect(
+  //   `https://full-stack-fusion.vercel.app?accesstokenjwt=${accessTokenJWT}`,
+  // );
+
+  res.redirect(`http://localhost:5173?accesstokenjwt=${accessTokenJWT}`);
 };
 
 export const getCurrentUserController = async (req, res, next) => {
