@@ -19,21 +19,6 @@ import {
 import { filterResUser } from '../utils/filterResUser.js';
 import { setupSession } from '../utils/createSession.js';
 
-// const setupSession = (res, sessionId, refreshToken) => {
-//   res.cookie('refreshToken', refreshToken, {
-//     httpOnly: true,
-//     expires: new Date(Date.now() + SEVEN_DAY),
-//     sameSite: 'none',
-//     secure: true,
-//   });
-//   res.cookie('sessionId', sessionId, {
-//     httpOnly: true,
-//     expires: new Date(Date.now() + SEVEN_DAY),
-//     sameSite: 'none',
-//     secure: true,
-//   });
-// };
-
 export const getTotalUsersController = async (req, res) => {
   try {
     const totalUsers = await getTotalUsers();
@@ -58,7 +43,6 @@ export const registerUserController = async (req, res) => {
     req.body,
   );
 
-  // Видалення полів createdAt та updatedAt з користувача
   const userWithoutTimestamps = filterResUser(user);
 
   setupSession(res, sessionId, refreshToken);
@@ -76,7 +60,6 @@ export const registerUserController = async (req, res) => {
 export const loginUserController = async (req, res) => {
   const { user, session } = await loginUser(req.body);
 
-  // Видалення полів createdAt та updatedAt з користувача
   const userWithoutTimestamps = filterResUser(user);
 
   setupSession(res, session._id, session.refreshToken);
@@ -140,9 +123,14 @@ export const getGoogleOAuthUrlController = async (req, res) => {
 
 export const loginWithGoogleController = async (req, res) => {
   const code = req.query.code;
+  if (!code) {
+    return res.status(404).json({
+      status: 404,
+      message: 'The Code is not allowed',
+    });
+  }
   const { user, session } = await loginOrSignupWithGoogle(code);
 
-  // Видалення полів createdAt та updatedAt з користувача
   const userWithoutTimestamps = filterResUser(user);
 
   setupSession(res, session._id, session.refreshToken);
@@ -159,8 +147,6 @@ export const loginWithGoogleController = async (req, res) => {
   const accessTokenJWT = jwt.sign(
     {
       accessToken: session.accessToken,
-      sessionId: session._id,
-      refreshToken: session.refreshToken,
       user: userWithoutTimestamps,
     },
     env('JWT_SECRET_GOOGLE'),
@@ -170,14 +156,14 @@ export const loginWithGoogleController = async (req, res) => {
   );
 
   res.redirect(
-    `https://full-stack-fusion.vercel.app/tracker?accesstokenjwt=${accessTokenJWT}`,
+    `https://full-stack-fusion.vercel.app?accesstokenjwt=${accessTokenJWT}`,
   );
 };
 
 export const getCurrentUserController = async (req, res, next) => {
   try {
     const user = req.user;
-    // Видалення полів createdAt та updatedAt з користувача
+
     const userWithoutTimestamps = filterResUser(user);
 
     res.json({
@@ -212,7 +198,6 @@ export const updateCurrentUserController = async (req, res, next) => {
     return next(createHttpError(404, 'User not found'));
   }
 
-  // Видалення полів createdAt та updatedAt з оновленого користувача
   const userWithoutTimestamps = filterResUser(updatedResult.user);
 
   res.json({

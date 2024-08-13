@@ -7,8 +7,21 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
-import { UPLOAD_DIR } from './constants/index.js';
+import { MONGO_DB, SEVEN_DAY, UPLOAD_DIR } from './constants/index.js';
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
+
+const user = env(MONGO_DB.MONGODB_USER);
+const pwd = env(MONGO_DB.MONGODB_PASSWORD);
+const url = env(MONGO_DB.MONGODB_URL);
+const db = env(MONGO_DB.MONGODB_DB);
+
+const store = new MongoStore({
+  mongoUrl: `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority&appName=AquaTrackApp`,
+  collectionName: 'sessions',
+  ttl: SEVEN_DAY,
+  autoRemove: 'native',
+});
 
 const PORT = Number(env('PORT', 3000));
 
@@ -16,12 +29,6 @@ export const setupServer = () => {
   const app = express();
 
   app.use(express.json());
-  // app.use(
-  //   cors({
-  //     origin: [env('APP_DOMAIN_FRONT'), env('DEV_APP_DOMAIN')],
-  //     credentials: true,
-  //   }),
-  // );
 
   app.use(
     cors({
@@ -41,12 +48,6 @@ export const setupServer = () => {
       credentials: true,
     }),
   );
-  // app.use(
-  //   cors({
-  //     origin: ['http://127.0.0.1:5501'],
-  //     credentials: true,
-  //   }),
-  // );
 
   app.use(cookieParser());
 
@@ -62,7 +63,8 @@ export const setupServer = () => {
     session({
       secret: 'your-secret-key',
       resave: false,
-      saveUninitialized: true,
+      saveUninitialized: false,
+      store: store,
       cookie: { secure: true },
     }),
   );

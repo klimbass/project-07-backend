@@ -58,10 +58,8 @@ usersRouter.patch(
   ctrlWrapper(updateCurrentUserController),
 );
 
-//створення посилання для гугл аутентифікації
 usersRouter.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
 
-//Створення логіну
 usersRouter.get(
   '/confirm-google-auth',
   // validateBody(loginWithGoogleOAuthSchema),
