@@ -135,15 +135,6 @@ export const loginWithGoogleController = async (req, res) => {
 
   setupSession(res, session._id, session.refreshToken);
 
-  // res.json({
-  //   status: 200,
-  //   message: 'Successfully logged in or signed up with Google!',
-  //   data: {
-  //     user: userWithoutTimestamps,
-  //     accessToken: session.accessToken,
-  //   },
-  // });
-
   const accessTokenJWT = jwt.sign(
     {
       accessToken: session.accessToken,
@@ -155,11 +146,9 @@ export const loginWithGoogleController = async (req, res) => {
     },
   );
 
-  // res.redirect(
-  //   `https://full-stack-fusion.vercel.app?accesstokenjwt=${accessTokenJWT}`,
-  // );
-
-  res.redirect(`http://localhost:5173?accesstokenjwt=${accessTokenJWT}`);
+  res.redirect(
+    `https://full-stack-fusion.vercel.app?accesstokenjwt=${accessTokenJWT}`,
+  );
 };
 
 export const getCurrentUserController = async (req, res, next) => {

@@ -6,7 +6,6 @@ import { upload } from '../middlewares/multer.js';
 import {
   registerUserSchema,
   loginUserSchema,
-  // loginWithGoogleOAuthSchema,
   requestResetEmailSchema,
   resetPasswordSchema,
   updateUserSchema,
@@ -60,11 +59,7 @@ usersRouter.patch(
 
 usersRouter.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
 
-usersRouter.get(
-  '/confirm-google-auth',
-  // validateBody(loginWithGoogleOAuthSchema),
-  ctrlWrapper(loginWithGoogleController),
-);
+usersRouter.get('/confirm-google-auth', ctrlWrapper(loginWithGoogleController));
 
 usersRouter.post(
   '/request-reset-email',
