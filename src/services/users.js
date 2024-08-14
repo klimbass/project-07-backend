@@ -155,7 +155,7 @@ export const requestResetToken = async (email) => {
   const template = handlebars.compile(templateSource);
   const html = template({
     name: name,
-    reset_link: `${env('LINK_RESET_PASSWORD')}?token=${resetToken}`,
+    reset_link: `${env('LINK_RESET_PASSWORD')}/${resetToken}`,
     email_support: `${env('EMAIL_SUPPORT')}`,
   });
 
