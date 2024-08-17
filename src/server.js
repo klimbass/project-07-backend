@@ -35,6 +35,7 @@ export const setupServer = () => {
       origin: (origin, callback) => {
         const allowedOrigins = [
           'http://localhost:5173',
+          'https://www.aquatrack.me',
           'https://full-stack-fusion.vercel.app',
           'https://aquatrackerapp.onrender.com',
           'http://localhost:3000',

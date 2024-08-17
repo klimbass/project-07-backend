@@ -22,6 +22,7 @@ import {
   resetPasswordController,
   getCurrentUserController,
   updateCurrentUserController,
+  verifyEmailUser,
 } from '../controllers/users.js';
 
 const usersRouter = Router();
@@ -71,5 +72,14 @@ usersRouter.post(
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
 );
+
+//веріфікація email
+// usersRouter.post(
+//   '/request-verify-email',
+//   validateBody(requestResetEmailSchema),
+//   ctrlWrapper(requestVerifyEmailController),
+// );
+
+usersRouter.get('/verify-email', ctrlWrapper(verifyEmailUser));
 
 export default usersRouter;

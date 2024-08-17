@@ -17,6 +17,7 @@ import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import { createSession } from '../utils/createSession.js';
+import sendVerifyEmail from '../utils/sendVerifyEmail.js';
 
 export const getTotalUsers = async () => {
   return await UsersCollection.countDocuments();
@@ -209,4 +210,61 @@ export const updateCurrentUser = async (userId, data, options = {}) => {
     user: result.value,
     isNew: Boolean(result?.lastErrorObject?.upserted),
   };
+};
+
+export const requestVerifyEmail = async (email) => {
+  console.log(`email in verifyEmail: ${email}`);
+
+  const user = await UsersCollection.findOne({ email });
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  await sendVerifyEmail(user);
+};
+
+export const verifyEmail = async (token) => {
+  let entries;
+  try {
+    entries = jwt.verify(token, env('JWT_SECRET'));
+  } catch (err) {
+    if (err instanceof jwt.TokenExpiredError) {
+      const decoded = jwt.decode(token);
+      const user = await UsersCollection.findById({_id: decoded.sub});
+      if(!user){
+        throw createHttpError(401, 'User not found');
+      }
+
+      await sendVerifyEmail(user);
+
+      throw createHttpError(
+        401,
+        'Token has expired. Please request a new verification email.',
+      );
+    } else {
+      throw createHttpError(401, 'Invalid token');
+    }
+  }
+  const user = await UsersCollection.findOneAndUpdate(
+    { _id: entries.sub },
+    { verifyEmail: true },
+    {
+      new: true,
+    },
+  );
+
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  await SessionsCollection.deleteOne({ userId: user._id });
+
+  const newSession = createSession();
+
+  const session = await SessionsCollection.create({
+    userId: user._id,
+    ...newSession,
+  });
+
+  return { user, session };
 };

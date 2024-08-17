@@ -6,10 +6,15 @@ const usersSchema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     gender: { type: String, enum: ['woman', 'man'], default: 'woman' },
-    weight: {type: Number, default: 0, },
-    dailyActivityTime: {type: Number, default: 0,},
-    dailyWaterNorm: {type: Number, default: 1.5,},
-    avatar: {type: String, default:"https://res.cloudinary.com/dntbkzhtq/image/upload/v1719141998/AquaTrack/defaultAvatar.webp"},
+    weight: { type: Number, default: 0 },
+    dailyActivityTime: { type: Number, default: 0 },
+    dailyWaterNorm: { type: Number, default: 1.5 },
+    avatar: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/dntbkzhtq/image/upload/v1719141998/AquaTrack/defaultAvatar.webp',
+    },
+    verifyEmail: { type: Boolean, default: false },
   },
   { timestamps: true, versionKey: false },
 );

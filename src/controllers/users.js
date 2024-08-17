@@ -15,6 +15,8 @@ import {
   resetPassword,
   updateCurrentUser,
   loginOrSignupWithGoogle,
+  requestVerifyEmail,
+  verifyEmail,
 } from '../services/users.js';
 import { filterResUser } from '../utils/filterResUser.js';
 import { setupSession } from '../utils/createSession.js';
@@ -46,6 +48,11 @@ export const registerUserController = async (req, res) => {
   const userWithoutTimestamps = filterResUser(user);
 
   setupSession(res, sessionId, refreshToken);
+
+  const email = await requestVerifyEmail(user.email);
+  if (!email) {
+    console.log(`Email do not sent`);
+  }
 
   res.json({
     status: 201,
@@ -209,9 +216,43 @@ export const requestResetEmailController = async (req, res) => {
 
 export const resetPasswordController = async (req, res) => {
   await resetPassword(req.body);
+
   res.json({
     status: 200,
     message: 'Password was successfully reset!',
     data: {},
   });
+};
+
+
+export const verifyEmailUser = async (req, res) => {
+  const verifyToken = req.query.verifyToken;
+
+  if (!verifyToken) {
+    return res.status(404).json({
+      status: 404,
+      message: 'The token is not allowed',
+    });
+  }
+
+  const { user, session } = await verifyEmail(verifyToken);
+
+  const userWithoutTimestamps = filterResUser(user);
+
+  setupSession(res, session._id, session.refreshToken);
+
+  const accessTokenJWT = jwt.sign(
+    {
+      accessToken: session.accessToken,
+      user: userWithoutTimestamps,
+    },
+    env('JWT_SECRET_GOOGLE'),
+    {
+      expiresIn: '15m',
+    },
+  );
+
+  res.redirect(
+    `https://full-stack-fusion.vercel.app?accesstokenjwt=${accessTokenJWT}`,
+  );
 };
