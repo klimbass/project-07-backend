@@ -3,10 +3,11 @@ import { HttpError } from 'http-errors';
 export const errorHandler = (err, req, res, next) => {
   console.log(err);
   if (err instanceof HttpError) {
-    if(err.status === 401 || err.message === 'Token has expired. Please request a new verification email.'){
+    if(err.message === 'Token has expired. Please request a new verification email.'){
       res.redirect(
         `https://full-stack-fusion.vercel.app/token-expired`,
       );
+      return;
     }
     res.status(err.status).json({
       status: err.status,
